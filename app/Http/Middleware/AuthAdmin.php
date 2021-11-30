@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
-class AuthUser
+class AuthAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,6 +17,9 @@ class AuthUser
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if(Session::get('AuthAdmin') === true)
+            return $next($request);
+        else
+            return redirect('/login');
     }
 }
