@@ -20,7 +20,7 @@ class CreateContactsTable extends Migration
             $table->string('first_name',255);
             $table->string('last_name',255)->nullable();
             $table->string('company',255)->nullable();
-            $table->timestamp('birthday')->nullable();
+            $table->date('birthday')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
