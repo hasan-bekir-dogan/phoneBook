@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        // And now, let's create a few groups in our database:
+        // And now, let's create a few admin in our database:
         Admin::create([
             'name' => "Administrator",
             'email' => "admin@contact.com",

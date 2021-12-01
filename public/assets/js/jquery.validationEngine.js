@@ -612,7 +612,7 @@
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._custom);
 						break;
 					case "groupRequired":
-						// Check is its the first of group, if not, reload validation with first field
+						// Check is its the first of groups, if not, reload validation with first field
 						// AND continue normal validation on present field
 						var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
 						var firstOfGroup = form.find(classGroup).eq(0);
@@ -763,8 +763,8 @@
 			//which does not make any sense
 			if(!required && !(field.val()) && field.val().length < 1 && $.inArray('equals', rules) < 0) options.isError = false;
 
-			// Hack for radio/checkbox group button, the validation go into the
-			// first radio/checkbox of the group
+			// Hack for radio/checkbox groups button, the validation go into the
+			// first radio/checkbox of the groups
 			var fieldType = field.prop("type");
 			var positionType=field.data("promptPosition") || options.promptPosition;
 
@@ -996,7 +996,7 @@
 			}
 		},
 		/**
-		* Validate that 1 from the group field is required
+		* Validate that 1 from the groups field is required
 		*
 		* @param {jqObject} field
 		* @param {Array[String]} rules
@@ -1008,7 +1008,7 @@
 		_groupRequired: function(field, rules, i, options) {
 			var classGroup = "["+options.validateAttribute+"*=" +rules[i + 1] +"]";
 			var isValid = false;
-			// Check all fields from the group
+			// Check all fields from the groups
 			field.closest("form, .validationEngineContainer").find(classGroup).each(function(){
 				if(!methods._required($(this), rules, i, options)){
 					isValid = true;

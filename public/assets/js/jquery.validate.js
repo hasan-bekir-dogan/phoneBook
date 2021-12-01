@@ -474,7 +474,7 @@ $.extend( $.validator, {
 				this.prepareElement( checkElement );
 				this.currentElements = $( checkElement );
 
-				// If this element is grouped, then validate all group elements already
+				// If this element is grouped, then validate all groups elements already
 				// containing a value
 				group = this.groups[ checkElement.name ];
 				if ( group ) {
@@ -985,7 +985,7 @@ $.extend( $.validator, {
 					}
 					$( element ).attr( "aria-describedby", describedBy );
 
-					// If this element is grouped, then assign to all elements in the same group
+					// If this element is grouped, then assign to all elements in the same groups
 					group = this.groups[ element.name ];
 					if ( group ) {
 						v = this;
@@ -1038,7 +1038,7 @@ $.extend( $.validator, {
 
 		validationTargetFor: function( element ) {
 
-			// If radio/checkbox, validate first element in group instead
+			// If radio/checkbox, validate first element in groups instead
 			if ( this.checkable( element ) ) {
 				element = this.findByName( element.name );
 			}

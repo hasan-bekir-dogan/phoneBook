@@ -5096,9 +5096,9 @@
       var icons = editor.ui.registry.getAll().icons;
       var optOxideIcon = Optional.from(icons[clazz]);
       return optOxideIcon.fold(function () {
-        return dom$1('<span class="${prefix}-toolbar-button ${prefix}-toolbar-group-item ${prefix}-icon-' + clazz + ' ${prefix}-icon"></span>');
+        return dom$1('<span class="${prefix}-toolbar-button ${prefix}-toolbar-groups-item ${prefix}-icon-' + clazz + ' ${prefix}-icon"></span>');
       }, function (icon) {
-        return dom$1('<span class="${prefix}-toolbar-button ${prefix}-toolbar-group-item">' + icon + '</span>');
+        return dom$1('<span class="${prefix}-toolbar-button ${prefix}-toolbar-groups-item">' + icon + '</span>');
       });
     };
     var forToolbar = function (clazz, action, extraBehaviours, editor) {
@@ -6268,7 +6268,7 @@
       return forToolbar(clazz, function () {
         var items = makeItems();
         realm.setContextToolbar([{
-            label: clazz + ' group',
+            label: clazz + ' groups',
             items: items
           }]);
       }, {}, editor);
@@ -7515,7 +7515,7 @@
 
     var getGroups = cached(function (realm, editor) {
       return [{
-          label: 'the link group',
+          label: 'the link groups',
           items: [sketch$3({
               fields: [
                 field('url', 'Type or paste URL'),
@@ -10852,16 +10852,16 @@
 
     var ScrollingToolbar = function () {
       var makeGroup = function (gSpec) {
-        var scrollClass = gSpec.scrollable === true ? '${prefix}-toolbar-scrollable-group' : '';
+        var scrollClass = gSpec.scrollable === true ? '${prefix}-toolbar-scrollable-groups' : '';
         return {
-          dom: dom$1('<div aria-label="' + gSpec.label + '" class="${prefix}-toolbar-group ' + scrollClass + '"></div>'),
+          dom: dom$1('<div aria-label="' + gSpec.label + '" class="${prefix}-toolbar-groups ' + scrollClass + '"></div>'),
           tgroupBehaviours: derive$2([config('adhoc-scrollable-toolbar', gSpec.scrollable === true ? [runOnInit(function (component, _simulatedEvent) {
                 set$5(component.element, 'overflow-x', 'auto');
                 markAsHorizontal(component.element);
                 register$2(component.element);
               })] : [])]),
           components: [Container.sketch({ components: [ToolbarGroup.parts.items({})] })],
-          markers: { itemSelector: '.' + resolve('toolbar-group-item') },
+          markers: { itemSelector: '.' + resolve('toolbar-groups-item') },
           items: gSpec.items
         };
       };
@@ -13519,7 +13519,7 @@
             });
           };
           var backToMaskGroup = {
-            label: 'The first group',
+            label: 'The first groups',
             scrollable: false,
             items: [forToolbar('back', function () {
                 editor.selection.collapse();
@@ -13534,19 +13534,19 @@
               }, {}, editor)]
           };
           var readOnlyGroup = {
-            label: 'The read only mode group',
+            label: 'The read only mode groups',
             scrollable: true,
             items: []
           };
           var features = setup$3(realm, editor);
           var items = detect(editor, features);
           var actionGroup = {
-            label: 'the action group',
+            label: 'the action groups',
             scrollable: true,
             items: items
           };
           var extraGroup = {
-            label: 'The extra group',
+            label: 'The extra groups',
             scrollable: false,
             items: []
           };

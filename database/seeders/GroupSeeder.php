@@ -22,9 +22,6 @@ class GroupSeeder extends Seeder
 
         // And now, let's create a few groups in our database:
         Groups::create([
-            'name' => "Other"
-        ]);
-        Groups::create([
             'name' => "Family"
         ]);
         Groups::create([

@@ -1,17 +1,17 @@
 @extends('layouts.general')
 
 @section('metaSeo')
-    <title>Admin Panel </title>
+    <title>Admin Panel | Login</title>
     <meta name="description" content="technoshop |  laravel">
     <meta name="keywords" content='technoshop | laravel'>
 @endsection
 
 @section('content')
 
-    @include('admin.blocks.loader')
+    @include('blocks.loader')
 
     <div class="controlPanelBackground">
-        <img src="{{asset('assets-admin/images/admin3.png')}}">
+        <img src="{{asset('assets/images/admin3.png')}}">
     </div>
 
     <div class="loginHeadArea">
@@ -24,7 +24,7 @@
                     <div class="col-md-12">
                         <div class="profilePhotoArea">
                             <div class="profilePhoto">
-                                <img src="{{asset('assets-admin/images/default-image.png')}}" alt="">
+                                <img src="{{asset('assets/images/admin-default-image.png')}}" alt="">
                             </div>
                             <div class="nameArea">
                                 Hasan Bekir DOĞAN
@@ -35,7 +35,7 @@
 
                 <hr/>
 
-                <form id="adminLoginForm" action="{{route('admin.loginSubmit')}}" method="POST" class="formArea" autocomplete="on">
+                <form id="adminLoginForm" action="{{route('loginSubmit')}}" method="POST" class="formArea" autocomplete="on">
 
                     @csrf
 
@@ -56,11 +56,11 @@
 
                     <div class="input-group emailArea">
                         <label for="email"><i class="far fa-user"></i></label>
-                        <input type="text" id="email" name="email" class="form-control" placeholder="E-mail *" value="{{old('email')}}" autofocus/>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="E-mail *" autofocus/>
                     </div>
                     <div class="input-group passwordArea">
                         <label for="password"><i class="far fa-lock"></i></label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password *" value="{{old('password')}}" autofocus/>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password *" autofocus/>
                     </div>
                     <div class="row">
                         <div class="col-md-12">

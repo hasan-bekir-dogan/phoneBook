@@ -1,7 +1,7 @@
 //== Class definition
 
 var BootstrapDaterangepicker = function () {
-    
+
     //== Private functions
     var demos = function () {
         // minimum setup
@@ -11,7 +11,7 @@ var BootstrapDaterangepicker = function () {
             cancelClass: 'btn-secondary'
         });
 
-        // input group and left alignment setup
+        // input groups and left alignment setup
         $('#m_daterangepicker_2').daterangepicker({
             buttonClasses: 'm-btn btn',
             applyClass: 'btn-primary',
@@ -101,7 +101,7 @@ var BootstrapDaterangepicker = function () {
     }
 
     var validationDemos = function() {
-        // input group and left alignment setup
+        // input groups and left alignment setup
         $('#m_daterangepicker_1_validate').daterangepicker({
             buttonClasses: 'm-btn btn',
             applyClass: 'btn-primary',
@@ -110,7 +110,7 @@ var BootstrapDaterangepicker = function () {
             $('#m_daterangepicker_1_validate .form-control').val( start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
         });
 
-        // input group and left alignment setup
+        // input groups and left alignment setup
         $('#m_daterangepicker_2_validate').daterangepicker({
             buttonClasses: 'm-btn btn',
             applyClass: 'btn-primary',
@@ -119,25 +119,25 @@ var BootstrapDaterangepicker = function () {
             $('#m_daterangepicker_3_validate .form-control').val( start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
         });
 
-        // input group and left alignment setup
+        // input groups and left alignment setup
         $('#m_daterangepicker_3_validate').daterangepicker({
             buttonClasses: 'm-btn btn',
             applyClass: 'btn-primary',
             cancelClass: 'btn-secondary'
         }, function(start, end, label) {
             $('#m_daterangepicker_3_validate .form-control').val( start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
-        });        
+        });
     }
 
     return {
         // public functions
         init: function() {
-            demos(); 
+            demos();
             validationDemos();
         }
     };
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
     BootstrapDaterangepicker.init();
 });

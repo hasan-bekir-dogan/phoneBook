@@ -43,7 +43,7 @@ class Authentication extends Controller
         $admin_email = $admin[0]->email;
         $admin_password = $admin[0]->password;
 
-        if($email != $admin_email || Hash::check($password, $admin_password)){
+        if($email != $admin_email || Hash::check($password, $admin_password) === false){
             return redirect()->back()->with('message','You entered the information incorrectly. Please try again.');
         }else{
             Session::put('AuthAdmin', true);

@@ -724,47 +724,7 @@ input[type=number] {
     font-family: $fontSemiBold;
     margin-bottom:35px;
 }
-.table > thead > tr > th {
-    color: $blackColor;
-    font-family: $fontSemiBold;
-    position: relative;
-    cursor:pointer;
-    &::before{
-        position:absolute;
-        right:12px;
-        font-size: 13px;
-        color: $color7;
-        font-family: $fontFontAwesomeRegular;
-        content:'\f30c';
-    }
-    &::after{
-        position:absolute;
-        right:5px;
-        font-size: 13px;
-        color: $color7;
-        font-family: $fontFontAwesomeRegular;
-        content:'\f309';
-    }
-    &:last-child{
-        cursor:default;
-        &::before{
-            content:'';
-        }
-        &::after{
-            content:'';
-        }
-    }
-    &.activeAsc{
-        &::before{
-            color: $blackColor;
-        }
-    }
-    &.activeDesc{
-        &::after{
-            color: $blackColor;
-        }
-    }
-}
+
 
 .dashboardSpan{
     background-color: $color6 $i;
@@ -1563,23 +1523,6 @@ table.dataTable thead .sorting_desc {
 }
 table.dataTable thead .sorting {
     background-image: unset;
-}
-.table > thead > tr > th::before {
-    color: $blackColor;
-    font-family: $fontFontAwesomeLight;
-    content: "\f176" $i;
-    right: 14px $i;
-}
-.table > thead > tr > th::after {
-    color: $blackColor;
-    font-family: $fontFontAwesomeLight;
-    content: "\f175" $i;
-}
-.table > thead > tr > th:last-child::before {
-    content: "" $i;
-}
-.table > thead > tr > th:last-child::after {
-    content: "" $i;
 }
 table.dataTable {
     margin-top: 20px !important;
