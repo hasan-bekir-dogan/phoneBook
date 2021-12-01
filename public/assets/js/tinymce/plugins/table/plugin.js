@@ -7713,11 +7713,11 @@
             value: 'col'
           },
           {
-            text: 'Row group',
+            text: 'Row groups',
             value: 'rowgroup'
           },
           {
-            text: 'Column group',
+            text: 'Column groups',
             value: 'colgroup'
           }
         ]

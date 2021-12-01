@@ -7593,7 +7593,7 @@ body.menu-bottom #collapse-menu {
 /*===== Form-icon css ends =====*/
 /*===== Basic form elements ends =====*/
 /**  =====================
-      Form group-add-on css start
+      Form groups-add-on css start
 ==========================  **/
 .input-group {
   margin-bottom: 1.25em; }
@@ -7614,7 +7614,7 @@ body.menu-bottom #collapse-menu {
 .input-group-dropdown [class*=btn-] {
   margin-bottom: 0; }
 
-/*===== Form group-add-on ends =====*/
+/*===== Form groups-add-on ends =====*/
 /**  =====================
       Switches css start
 ==========================  **/

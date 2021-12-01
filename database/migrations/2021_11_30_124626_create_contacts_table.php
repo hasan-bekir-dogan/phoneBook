@@ -15,7 +15,7 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->index();
+            $table->foreignId('group_id')->index()->comment('if group_id is 0, then this person don\'t belong to any group.');
             $table->text('profile_photo_path')->nullable();
             $table->string('first_name',255);
             $table->string('last_name',255)->nullable();

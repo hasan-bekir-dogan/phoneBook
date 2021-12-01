@@ -1,7 +1,7 @@
 //== Class definition
 
 var BootstrapDatepicker = function () {
-    
+
     //== Private functions
     var demos = function () {
         // minimum setup
@@ -24,7 +24,7 @@ var BootstrapDatepicker = function () {
             }
         });
 
-        // input group layout 
+        // input groups layout
         $('#m_datepicker_2, #m_datepicker_2_validate').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
@@ -34,7 +34,7 @@ var BootstrapDatepicker = function () {
             }
         });
 
-        // input group layout for modal demo
+        // input groups layout for modal demo
         $('#m_datepicker_2_modal').datepicker({
             todayHighlight: true,
             orientation: "bottom left",
@@ -44,7 +44,7 @@ var BootstrapDatepicker = function () {
             }
         });
 
-        // enable clear button 
+        // enable clear button
         $('#m_datepicker_3, #m_datepicker_3_validate').datepicker({
             todayBtn: "linked",
             clearBtn: true,
@@ -66,7 +66,7 @@ var BootstrapDatepicker = function () {
             }
         });
 
-        // orientation 
+        // orientation
         $('#m_datepicker_4_1').datepicker({
             orientation: "top left",
             todayHighlight: true,
@@ -125,11 +125,11 @@ var BootstrapDatepicker = function () {
     return {
         // public functions
         init: function() {
-            demos(); 
+            demos();
         }
     };
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
     BootstrapDatepicker.init();
 });

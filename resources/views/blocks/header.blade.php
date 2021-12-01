@@ -9,8 +9,8 @@
             <a class="mobile-search morphsearch-search" href="#">
                 <i class="ti-search"></i>
             </a>
-            <a class="logoArea" href="{{route('admin.dashboard')}}">
-                <img class="img-fluid" src="{{asset('/assets-admin/images/logo-white.png')}}" alt="Theme-Logo" />
+            <a class="logoArea" href="{{route('dashboard')}}">
+                <h5>Phone Book</h5>
             </a>
             <a class="mobile-options">
                 <i class="ti-more"></i>
@@ -32,13 +32,13 @@
             <ul class="nav-right">
                 <li class="user-profile header-notification">
                     <a href="#!">
-                        <img src="{{asset('/assets-admin/images/default-image-small.png')}}" class="img-radius" alt="User-Profile-Image">
+                        <img src="{{asset('assets/images/admin-default-image-small.png')}}" class="img-radius" alt="User-Profile-Image">
                         <span>Hasan Bekir DOĞAN</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
                         <li>
-                            <button onclick="window.location.href='{{route('admin.logoutSubmit')}}'" name="submitSignout">
+                            <button onclick="window.location.href='{{route('logoutSubmit')}}'" name="submitSignout">
                                 <i class="far fa-sign-out-alt"></i> Logout
                             </button>
                         </li>

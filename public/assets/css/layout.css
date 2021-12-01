@@ -841,44 +841,6 @@ input[type=number] {
   margin-bottom: 35px;
 }
 
-.table > thead > tr > th {
-  color: #2c343b;
-  font-family: "Campton SemiBold";
-  position: relative;
-  cursor: pointer;
-}
-.table > thead > tr > th::before {
-  position: absolute;
-  right: 12px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.15);
-  font-family: "Font Awesome 5 R";
-  content: "";
-}
-.table > thead > tr > th::after {
-  position: absolute;
-  right: 5px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.15);
-  font-family: "Font Awesome 5 R";
-  content: "";
-}
-.table > thead > tr > th:last-child {
-  cursor: default;
-}
-.table > thead > tr > th:last-child::before {
-  content: "";
-}
-.table > thead > tr > th:last-child::after {
-  content: "";
-}
-.table > thead > tr > th.activeAsc::before {
-  color: #2c343b;
-}
-.table > thead > tr > th.activeDesc::after {
-  color: #2c343b;
-}
-
 .dashboardSpan {
   background-color: #537ecf !important;
 }
@@ -1652,27 +1614,6 @@ table.dataTable thead .sorting_desc {
 
 table.dataTable thead .sorting {
   background-image: unset;
-}
-
-.table > thead > tr > th::before {
-  color: #2c343b;
-  font-family: "Font Awesome 5";
-  content: "" !important;
-  right: 14px !important;
-}
-
-.table > thead > tr > th::after {
-  color: #2c343b;
-  font-family: "Font Awesome 5";
-  content: "" !important;
-}
-
-.table > thead > tr > th:last-child::before {
-  content: "" !important;
-}
-
-.table > thead > tr > th:last-child::after {
-  content: "" !important;
 }
 
 table.dataTable {

@@ -20710,7 +20710,7 @@
         factory: Input
       });
       var extraClasses = spec.flex ? ['tox-form__group--stretched'] : [];
-      var extraClasses2 = extraClasses.concat(spec.maximized ? ['tox-form-group--maximize'] : []);
+      var extraClasses2 = extraClasses.concat(spec.maximized ? ['tox-form-groups--maximize'] : []);
       var extraBehaviours = [
         Disabling.config({
           disabled: function () {

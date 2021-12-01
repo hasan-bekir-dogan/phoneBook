@@ -22,7 +22,7 @@ class ContactSeeder extends Seeder
         // And now, let's create a few contacts in our database:
         for ($i = 0; $i < 10; $i++) {
             Contacts::create([
-                'group_id' => $faker->numberBetween($min = 1, $max = 4),
+                'group_id' => $faker->numberBetween($min = 0, $max = 3),
                 'profile_photo_path' => "assets/images/profile-default-photo.png",
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,

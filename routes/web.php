@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Group;
 use App\Http\Controllers\Contact;
 /*
@@ -12,80 +12,52 @@ use App\Http\Controllers\Contact;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider within a groups which
+| contains the "web" middleware groups. Now create something great!
 |
 */
 
 
+// login
+Route::get('/', function (){ return redirect(route('login')); });
+Route::get('/login', [Authentication::class, "index"])->name('login');
+Route::post('/loginFormSubmit', [Authentication::class, "login"])->name('loginSubmit');
 
-//admin panel processes (start)
-//#######################################################################################################################################
-
-//admin login
-Route::get('/admin', function (){ return redirect(route('admin.login')); });
-Route::get('/admin/login', [Login::class, "index"])->name('admin.login');
-Route::post('/admin/loginFormSubmit', [Login::class, "login"])->name('admin.loginSubmit');
-
-//admin logout
-Route::get('/admin/logoutSubmit', [Login::class, "logout"])->name('admin.logoutSubmit');
+// logout
+Route::get('/logoutSubmit', [Authentication::class, "logout"])->name('logoutSubmit');
 
 
 Route::middleware(['authAdmin'])->group( function () {
 
-    //admin dashboard
-    Route::get('/admin/dashboard', [Dashboard::class, "index"])->name('admin.dashboard');
+    // dashboard
+    Route::get('/dashboard', [Dashboard::class, "index"])->name('dashboard');
 
-    //admin products
-    Route::get('/admin/products', [Product::class, "index"])->name('admin.products');
-    Route::post('/admin/showProducts', [Product::class, "showProducts"]);
-    Route::get('/admin/add-product', [Product::class, "addProduct"])->name('admin.addProduct');
-    Route::post('/admin/addProductFormSubmit', [Product::class, "addProductFormSubmit"]);
-    Route::get('/admin/update-product/{id}', [Product::class, "updateProduct"]);
-    Route::post('/admin/updateProductFormSubmit', [Product::class, "updateProductFormSubmit"]);
-    Route::post('/admin/deleteProduct', [Product::class, "deleteProduct"]);
-    Route::post('/admin/deleteImage', [Product::class, "deleteImage"]);
 
-    //admin categories
-    Route::get('/admin/categories', [Category::class, "index"])->name('admin.categories');
-    Route::post('/admin/showCategories', [Category::class, "showCategories"]);
-    Route::get('/admin/add-category', [Category::class, "addCategory"])->name('admin.addCategory');
-    Route::post('/admin/addCategoryFormSubmit', [Category::class, "addCategoryFormSubmit"]);
-    Route::get('/admin/update-category/{id}', [Category::class, "updateCategory"]);
-    Route::post('/admin/updateCategoryFormSubmit', [Category::class, "updateCategoryFormSubmit"]);
-    Route::post('/admin/deleteCategory', [Category::class, "deleteCategory"]);
+    // CRUD for groups
+    Route::get('groups', [Group::class, "index"]); // show groups
+    Route::get('groups/{group}', [Group::class, "show"]); // view('update-group', group)
+    Route::post('groups', [Group::class, "store"]); // create group
+    Route::patch('groups/{group}', [Group::class, "update"]); // update group
+    Route::delete('groups/{group}', [Group::class, "delete"]); // delete group
+    // view pages for groups
+    Route::get('group/list', [Group::class, "groupListPage"])->name('group-list'); // view('group list')
+    Route::get('group/create', [Group::class, "addGroupPage"])->name('group-create'); // view('add-group')
+    // search for groups
+    Route::post('group/search', [Group::class, "search"]); // search group
 
-    //admin brands
-    Route::get('/admin/brands', [Brand::class, "index"])->name('admin.brands');
-    Route::post('/admin/showBrands', [Brand::class, "showBrands"]);
-    Route::get('/admin/add-brand', [Brand::class, "addBrand"])->name('admin.addBrand');
-    Route::post('/admin/addBrandFormSubmit', [Brand::class, "addBrandFormSubmit"]);
-    Route::get('/admin/update-brand/{id}', [Brand::class, "updateBrand"]);
-    Route::post('/admin/updateBrandFormSubmit', [Brand::class, "updateBrandFormSubmit"]);
-    Route::post('/admin/deleteBrand', [Brand::class, "deleteBrand"]);
 
-    //admin users
-    Route::get('/admin/users', [Users::class, "index"])->name('admin.users');
-    Route::post('/admin/showUsers', [Users::class, "showUsers"]);
-    Route::get('/admin/user-detail/{id}', [Users::class, "userDetail"]);
-    Route::post('/admin/deleteUser', [Users::class, "deleteUser"]);
-
-    //admin contacts
-    Route::get('/admin/contacts', [ContactAdmin::class, "index"])->name('admin.contacts');
-    Route::post('/admin/showContacts', [ContactAdmin::class, "showContacts"]);
-    Route::get('/admin/contact-detail/{id}', [ContactAdmin::class, "contactDetail"]);
-    Route::post('/admin/deleteContact', [ContactAdmin::class, "deleteContact"]);
-
-    //admin orders
-    Route::get('/admin/orders', [OrderAdmin::class, "index"])->name('admin.orders');
-    Route::post('/admin/showOrders', [OrderAdmin::class, "showOrders"]);
-    Route::get('/admin/order-detail/{id}', [OrderAdmin::class, "orderDetail"]);
-    Route::post('/admin/showOrderItems', [OrderAdmin::class, "showOrderItems"]);
-    Route::post('/admin/orderStatusFormSubmit', [OrderAdmin::class, "orderStatusFormSubmit"]);
+    // CRUD for contacts
+    Route::get('contacts', [Contact::class, "index"]); // show contacts
+    Route::get('contacts/{contact}', [Contact::class, "show"]); // view('update-contact', group)
+    Route::post('contacts', [Contact::class, "store"]); // create contact
+    Route::patch('contacts/{contact}', [Contact::class, "update"]); // update contact
+    Route::delete('contacts/{contact}', [Contact::class, "delete"]); // delete contact
+    // view pages for contacts
+    Route::get('contact/list', [Contact::class, "contactListPage"])->name('contact-list'); // view('contact list')
+    Route::get('contact/create', [Contact::class, "addContactPage"])->name('contact-create'); // view('add-contact')
+    // search for contacts
+    Route::post('contact/search', [Contact::class, "search"]); // search group
 
 });
-
-//#######################################################################################################################################
-//admin panel processes (end)
 
 

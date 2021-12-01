@@ -1,19 +1,19 @@
 
 
 
-contactList();
+productList();
 
-function contactList() {
+function productList() {
     $(function () {
         let _token = $('meta[name="csrf-token"]').attr('content');
 
-        var table = $('#contactTable').DataTable({
+        var table = $('#productTable').DataTable({
             processing: true,
             serverSide: true,
             pageLength: 10,
             lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
             ajax: {
-                url: "/admin/showContacts",
+                url: "/admin/showProducts",
                 type: "POST",
                 data: {
                     _token: _token
@@ -22,10 +22,11 @@ function contactList() {
             },
             columns: [
                 {data: 'id', name: 'id'},
+                {data: 'sku', name: 'sku'},
+                {data: 'image', name: 'image'},
                 {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'phone', name: 'phone'},
-                {data: 'message', name: 'message'},
+                {data: 'price', name: 'price'},
+                {data: 'stock', name: 'stock'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'transaction', name: 'transaction', orderable: false, searchable: false},
             ]
@@ -37,14 +38,14 @@ function contactList() {
 
 $(document).on('click', '.deleteButton', function (){
     let id = $(this).attr('data-id');
-    deleteContact(id);
+    deleteProduct(id);
 });
 
-function deleteContact(contactId){
+function deleteProduct(productId){
     let _token   = $('meta[name="csrf-token"]').attr('content');
 
     Swal.fire({
-        title: 'Do you want to delete the contact?',
+        title: 'Do you want to delete the product?',
         showDenyButton: true,
         confirmButtonText: `Yes`,
         denyButtonText: `No`,
@@ -58,22 +59,22 @@ function deleteContact(contactId){
             openAjaxLoader();
 
             $.ajax({
-                url: "/admin/deleteContact",
+                url: "/admin/deleteProduct",
                 type:"POST",
                 data:{
-                    contactId: contactId,
+                    productId: productId,
                     _token: _token
                 },
                 dataType:"json"
             }).done(function (response) {
 
-                $('#contactTable').DataTable().clear().destroy();
+                $('#productTable').DataTable().clear().destroy();
 
-                contactList();
+                productList();
 
                 closeAjaxLoader();
 
-                toastr.success('The contact has been successfully deleted.');
+                toastr.success('The product has been successfully deleted.');
 
 
 

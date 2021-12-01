@@ -19,7 +19,7 @@ class LabelNameTypeSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        // And now, let's create a few groups in our database:
+        // And now, let's create a few label name types in our database:
         LabelNameTypes::create([
             'name' => "Mobile"
         ]);

@@ -19,7 +19,7 @@ class AddressSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        // And now, let's create a few contacts in our database:
+        // And now, let's create a few addresses in our database:
         for ($i = 0; $i < 20; $i++) {
             Addresses::create([
                 'contact_id' => $faker->numberBetween($min = 1, $max = 10),
