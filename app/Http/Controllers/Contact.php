@@ -9,21 +9,27 @@ use App\Models\Groups;
 use App\Models\LabelNameTypes;
 use App\Models\Phones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Contact extends Controller
 {
     public function index(){
-        $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-            ->get();
-
-        $totalDataNumber = $data->count();
+        $data = Cache::remember('contacts', 30*60, function () {
+            return Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                ->orderBy('name')
+                ->get();
+        });
+        $totalDataNumber = Cache::remember('totalContactNumber', 30*60, function () {
+            return Contacts::count();
+        });
 
         return response()->json([
             'data' => $data,
             'totalDataNumber' => $totalDataNumber
         ], 200);
     }
+
     public function show($id){
         $groups = Groups::selectRaw('id, name')
             ->get();
@@ -37,6 +43,7 @@ class Contact extends Controller
             'contact' => $contact[0]
         ]);
     }
+
     public function update(Request $request, $id){
         $phone_ids = explode(",",$request->phoneIds);
         $phone_db_ids = explode(",",$request->phoneDbIds);
@@ -224,6 +231,14 @@ class Contact extends Controller
             }
         }
 
+        // caching area
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->get();
+
+        Cache::put('contacts', $contactData, 30*60);
+        Cache::put('totalContactNumber', $contactData->count(), 30*60);
+
 
         return response()->json([
             'status' => 'successful'
@@ -252,6 +267,14 @@ class Contact extends Controller
 
         Emails::where('contact_id', $id)
             ->delete();
+
+        // caching area
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->get();
+
+        Cache::put('contacts', $contactData, 30*60);
+        Cache::put('totalContactNumber', $contactData->count(), 30*60);
 
         return response()->json([
             'status' => 'successful'
@@ -362,6 +385,14 @@ class Contact extends Controller
             }
         }
 
+        // caching area
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->get();
+
+        Cache::put('contacts', $contactData, 30*60);
+        Cache::put('totalContactNumber', $contactData->count(), 30*60);
+
 
         return response()->json([
             'status' => 'successful'
@@ -386,6 +417,7 @@ class Contact extends Controller
             'addresses' => $addresses
         ]);
     }
+
     public function contactListPage(){
         $groups = Groups::selectRaw('id, name')
                         ->get();
