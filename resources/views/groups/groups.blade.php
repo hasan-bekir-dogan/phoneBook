@@ -45,7 +45,7 @@
                                                                     <div class="productSpecification">
                                                                         <div class="productNumberSummary">
                                                                             <div id="totalDataNumber" class="selectLabel">
-                                                                                129 contacts
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="searchProductArea">

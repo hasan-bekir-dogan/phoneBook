@@ -24,12 +24,7 @@ class AddressSeeder extends Seeder
             Addresses::create([
                 'contact_id' => $faker->numberBetween($min = 1, $max = 10),
                 'label_name_id' => $faker->randomElement($array = array (2,3,4,6)),
-                'street' => $faker->streetName,
-                'postal_code' => $faker->postcode,
-                'district' => $faker->state,
-                'city' => $faker->city,
-                'country' => $faker->country,
-                'explicit_address' => $faker->address
+                'address' => $faker->address
             ]);
         }
     }

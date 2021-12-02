@@ -1,183 +1,140 @@
 
+var phoneCounter = 1;
+var phoneIDArray = [];
+var emailCounter = 1;
+var emailIDArray = [];
+var addressCounter = 1;
+var addressIDArray = [];
 
-$('#addProductForm').on('submit', function (e){
+$('#addContactForm').on('submit', function (e) {
+
     e.preventDefault();
 
-    $('#successMsg').hide();
+    if (phoneIDArray.length === 0) {
+        e.stopImmediatePropagation();
 
-    openAjaxLoader();
-
-    let price = $('#productPriceForm').val();
-    let discount_rate = $('#discountForm').val();
-    let discounted_price = $('#productDiscountedPriceForm').val();
-    let cargo_price = $('#cargoPriceForm').val();
-    let stock = $('#stockForm').val();
-    let brand = $('#brandForm').val();
-    let category = $('#categoryForm').val();
-    let name_en = $('#productNameEnForm').val();
-    let description_en = tinymce.get('descriptionsEnForm').getContent();
-    let detail_en = tinymce.get('detailsEnForm').getContent();
-    let name_tr = $('#productNameTrForm').val();
-    let description_tr = tinymce.get('descriptionsTrForm').getContent();
-    let detail_tr = tinymce.get('detailsTrForm').getContent();
-
-    if(category === null)
-        category = '';
-    if(brand === null)
-        brand = '';
-
-    var formData = new FormData(this);
-    let TotalImages = $('#images')[0].files.length; //Total Images
-    let images = $('#images')[0];
-    for (let i = 0; i < TotalImages; i++) {
-        formData.append('images' + i, images.files[i]);
-    }
-    formData.append('TotalImages', TotalImages);
-
-
-    formData.append('price', price);
-    formData.append('discount_rate', discount_rate);
-    formData.append('discounted_price', discounted_price);
-    formData.append('cargo_price', cargo_price);
-    formData.append('stock', stock);
-    formData.append('brand', brand);
-    formData.append('category', category);
-    formData.append('name_en', name_en);
-    formData.append('description_en', description_en);
-    formData.append('detail_en', detail_en);
-    formData.append('name_tr', name_tr);
-    formData.append('description_tr', description_tr);
-    formData.append('detail_tr', detail_tr);
-
-    $('#priceErrorMsg').text('');
-    $('#discountRateErrorMsg').text('');
-    $('#discountedPriceErrorMsg').text('');
-    $('#cargoPriceErrorMsg').text('');
-    $('#stockErrorMsg').text('');
-    $('#brandErrorMsg').text('');
-    $('#categoryErrorMsg').text('');
-    $('#nameEnErrorMsg').text('');
-    $('#nameTrErrorMsg').text('');
-    $('#imagesErrorMsg').text('');
-
-
-    $.ajax({
-        url: "/admin/addProductFormSubmit",
-        type: "POST",
-        data: formData,
-        cache:false,
-        contentType: false,
-        processData: false,
-        dataType:"json"
-    }).done(function (response) {
-
-        closeAjaxLoader();
-
-        $('#successMsg').show();
-
-        toastr.success('The product information has been successfully updated!');
-
-        let timerInterval
         Swal.fire({
-            title: 'You are redirected to the product list page.',
-            timer: 4000,
-            timerProgressBar: false,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            window.location.href='/admin/contacts';
-
-            if (result.dismiss === Swal.DismissReason.timer) {
-            }
+            icon: 'warning',
+            title: 'Something went wrong!',
+            text: 'You have to add at least one phone number!'
         })
-
-
-    }).fail(function (response) {
-
-        closeAjaxLoader();
-
-        $('#priceErrorMsg').text(response.responseJSON.errors.price);
-        $('#discountRateErrorMsg').text(response.responseJSON.errors.discount_rate);
-        $('#discountedPriceErrorMsg').text(response.responseJSON.errors.discounted_price);
-        $('#cargoPriceErrorMsg').text(response.responseJSON.errors.cargo_price);
-        $('#stockErrorMsg').text(response.responseJSON.errors.stock);
-        $('#brandErrorMsg').text(response.responseJSON.errors.brand);
-        $('#categoryErrorMsg').text(response.responseJSON.errors.category);
-        $('#nameEnErrorMsg').text(response.responseJSON.errors.name_en);
-        $('#nameTrErrorMsg').text(response.responseJSON.errors.name_tr);
-        $('#imagesErrorMsg').text(response.responseJSON.errors.images);
-
-    });
-
-    e.stopImmediatePropagation();
-});
-
-
-$('#images').on('change', function() {
-    multiImgPreview($(this)[0], '.imgPreview');
-});
-
-$('#productPriceForm').change(function (){
-    var price = parseFloat($(this).val());
-
-    if(price < 0) {
-        price = 0;
-        $(this).val(price);
     }
+    else {
 
-    var discount_rate = parseFloat($('#discountForm').val());
-    var discounted_price = (price * ((100 - discount_rate) / 100)).toFixed(2);
-    $('#productDiscountedPriceForm').val(discounted_price);
-});
+        $('#successMsg').hide();
 
-$('#discountForm').change(function (){
-    var discount_rate = parseFloat($(this).val());
+        openAjaxLoader();
 
-    if(discount_rate < 0) {
-        discount_rate = 0;
-        $(this).val(discount_rate);
+        var formData = new FormData(this);
+        formData.append('phoneIds', phoneIDArray);
+        formData.append('emailIds', emailIDArray);
+        formData.append('addressIds', addressIDArray);
+
+        $('#firstNameErrorMsg').text('');
+        $('#lastNameErrorMsg').text('');
+        $('#companyErrorMsg').text('');
+        $('#birthdayErrorMsg').text('');
+        $('#profilePhotoErrorMsg').text('');
+
+        for (var k = 0; k < phoneIDArray.length; k++) {
+            $('#phoneValueErrorMsg' + phoneIDArray[k].toString()).text('');
+            $('#phoneLabelErrorMsg' + phoneIDArray[k].toString()).text('');
+        }
+        for (var j = 0; j < emailIDArray.length; j++) {
+            $('#emailValueErrorMsg' + emailIDArray[j].toString()).text('');
+            $('#emailLabelErrorMsg' + emailIDArray[j].toString()).text('');
+        }
+        for (var h = 0; h < addressIDArray.length; h++) {
+            $('#addressValueErrorMsg' + addressIDArray[h].toString()).text('');
+            $('#addressLabelErrorMsg' + addressIDArray[h].toString()).text('');
+        }
+
+
+        $.ajax({
+            url: "/contacts",
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json"
+        }).done(function (response) {
+
+            closeAjaxLoader();
+
+            $('#successMsg').show();
+
+            toastr.success('The contact has been successfully created!');
+
+            let timerInterval
+            Swal.fire({
+                title: 'You are redirected to the contact list page.',
+                timer: 4000,
+                timerProgressBar: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                window.location.href = '/contact/list';
+
+                if (result.dismiss === Swal.DismissReason.timer) {
+                }
+            })
+
+        }).fail(function (response) {
+
+            closeAjaxLoader();
+
+            $('#firstNameErrorMsg').text(response.responseJSON.errors.firstName);
+            $('#lastNameErrorMsg').text(response.responseJSON.errors.lastName);
+            $('#companyErrorMsg').text(response.responseJSON.errors.company);
+            $('#birthdayErrorMsg').text(response.responseJSON.errors.birthday);
+            $('#profilePhotoErrorMsg').text(response.responseJSON.errors.photo);
+
+            for (var m = 0; m < phoneIDArray.length; m++) {
+                $('#phoneValueErrorMsg' + phoneIDArray[m].toString()).text(response.responseJSON.errors['phoneValue' + phoneIDArray[m].toString()]);
+                $('#phoneLabelErrorMsg' + phoneIDArray[m].toString()).text(response.responseJSON.errors['phoneLabel' + phoneIDArray[m].toString()]);
+            }
+            for (var i = 0; i < emailIDArray.length; i++) {
+                $('#emailValueErrorMsg' + emailIDArray[i].toString()).text(response.responseJSON.errors['emailValue' + emailIDArray[i].toString()]);
+                $('#emailLabelErrorMsg' + emailIDArray[i].toString()).text(response.responseJSON.errors['emailLabel' + emailIDArray[i].toString()]);
+            }
+            for (var p = 0; p < addressIDArray.length; p++) {
+                $('#addressValueErrorMsg' + addressIDArray[p].toString()).text(response.responseJSON.errors['addressValue' + addressIDArray[p].toString()]);
+                $('#addressLabelErrorMsg' + addressIDArray[p].toString()).text(response.responseJSON.errors['addressLabel' + addressIDArray[p].toString()]);
+            }
+        });
+
+        e.stopImmediatePropagation();
     }
-    else if(discount_rate > 100) {
-        discount_rate = 100;
-        $(this).val(discount_rate);
-    }
-
-    var price = parseFloat($('#productPriceForm').val());
-    var discounted_price = (price * ((100 - discount_rate) / 100)).toFixed(2);
-    $('#productDiscountedPriceForm').val(discounted_price);
 });
 
-$('#productDiscountedPriceForm').change(function (){
-    var discounted_price = parseFloat($(this).val());
-
-    if(discounted_price < 0) {
-        discounted_price = 0;
-        $(this).val(discounted_price);
-    }
-
-    var discount_rate = parseFloat($('#discountForm').val());
-    var price = (discounted_price * ((100 + discount_rate) / 100)).toFixed(2);
-    $('#productPriceForm').val(price);
+$('#profilePhoto').on('change', function() {
+    imgPreview($(this)[0]);
 });
 
-$('.previewDeleteButton').click(function (){
-    let image_id = $(this).attr('data-id');
-    deleteDbImage(image_id);
+$('#phoneAddButtonId').click(function(){
+    addPhone();
+});
+$('#emailAddButtonId').click(function(){
+    addEmail();
+});
+$('#addressAddButtonId').click(function(){
+    addAddress();
 });
 
-//this function deletes the image. But, this function works before submit the form
-function deleteImage (product_image_id){
+// this function deletes the image. But, this function works before submit the form
+function deleteImage (){
 
     Swal.fire({
-        title: 'Do you want to delete the image?',
+        title: 'Do you want to remove the photo?',
         showDenyButton: true,
         confirmButtonText: `Yes`,
         denyButtonText: `No`,
@@ -199,24 +156,22 @@ function deleteImage (product_image_id){
                 return b.files
             }
 
-            var fileInput = $('#images')[0];
+            var fileInput = $('#profilePhoto')[0];
 
             //After FileList converts to array, deleting item
-            var imagesAray = Array.from($('#images')[0].files);
-            imagesAray.splice(product_image_id,1);
+            var imagesAray = Array.from($('#profilePhoto')[0].files);
+            imagesAray.splice(0,1);
 
-            for (var k=0; k<fileInput.files.length; k++){
-                $('#previewImg'+k).remove();
-            }
+            $('#profilePhotoArea').prop('src', '/assets/images/profile-default-photo.png');
+            $('#deleteProfilePhotoCross').remove();
+            $('#editPhotoButton').html('Add Photo');
 
             //update FileList
             fileInput.files = new FileListItems(imagesAray)
 
-            multiImgPreview($('#images')[0], '.imgPreview');
-
             closeAjaxLoader();
 
-            toastr.success('The image has been successfully deleted.');
+            toastr.success('The photo has been successfully removed.');
 
         } else if (result.isDenied) {
 
@@ -225,41 +180,240 @@ function deleteImage (product_image_id){
 
 }
 
-//this method preview the images that uploaded
-function multiImgPreview(input, imgPreviewPlaceholder) {
+// this method preview the images that uploaded
+function imgPreview(input) {
+    if (input.files && input.files[0]) {
+        var fileReader = new FileReader();
+        fileReader.onload = function (event) {
+            $('#profilePhotoArea').prop('src', event.target.result);
 
-    if (input.files) {
-        var filesAmount = input.files.length;
-        $('.previewImgSection').remove();
-        var counter = 0;
-        for (var i = 0; i < filesAmount; i++) {
-            var reader = new FileReader();
+            var deleteImageButtonHtml = ' <a id="deleteProfilePhotoCross" class="deleteImageButton" href="javascript:void(0)" onclick="deleteImage()" title="Delete Photo"> ' +
+                '                             <i class="fal fa-times"></i> ' +
+                '                         </a> \n';
 
-            reader.onload = function(event) {
-
-                var imgHtml = ' <li id="previewImg'+counter+'" class="previewImgSection"> \n' +
-                    '               <div class="previewImgArea"> \n' +
-                    '                   <img src="'+event.target.result+'" alt=""> \n' +
-                    '               </div> \n' +
-                    '               <div class="previewDeleteButtonArea"> \n' +
-                    '                   <a href="javascript:void(0)" onclick="deleteImage('+counter+')">' +
-                    '                       <i class="far fa-trash-alt"></i>' +
-                    '                   </a> \n' +
-                    '               </div> \n' +
-                    '           </li>\n';
-
-                counter ++;
-
-                $($.parseHTML(imgHtml)).appendTo(imgPreviewPlaceholder);
-
-            }
-
-            reader.readAsDataURL(input.files[i]);
-        }
+            $($.parseHTML(deleteImageButtonHtml)).appendTo('.chooseImagesSection');
+            $('#editPhotoButton').html('Update Photo');
+        };
+        fileReader.readAsDataURL(input.files[0]);
     }
-
 }
 
+// this method add new phone
+function addPhone(){
+
+    var newPhoneHtml = ' <div id="phone'+phoneCounter+'" class="form-group addedFormGroups">\n' +
+        '                    <div class="row">\n' +
+        '                        <div class="col-lg-3">\n' +
+        '                            <label for="phoneLabelForm'+phoneCounter+'">Label Name <span>*</span></label>\n' +
+        '                            <select name="phoneLabel'+phoneCounter+'" id="phoneLabelForm'+phoneCounter+'" class="form-control">\n' +
+        '                                <option value="0" disabled selected>Select Label Name</option>\n' +
+        '                                <option value="1">Mobile</option>\n' +
+        '                                <option value="2">Home</option>\n' +
+        '                                <option value="3">Work</option>\n' +
+        '                                <option value="4">School</option>\n' +
+        '                                <option value="5">Fax</option>\n' +
+        '                                <option value="6">Other</option>\n' +
+        '                            </select>\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="phoneLabelErrorMsg'+phoneCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-8">\n' +
+        '                            <label for="phoneValueForm'+phoneCounter+'">Value <span>*</span></label>\n' +
+        '                            <input type="text" name="phoneValue'+phoneCounter+'" id="phoneValueForm'+phoneCounter+'" class="form-control">\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="phoneValueErrorMsg'+phoneCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-1">' +
+        '                            <div class="deleteBtnArea">' +
+        '                                <a href="javascript:void(0)" onclick="deletePhone('+phoneCounter+')" title="Delete Phone">' +
+        '                                    <i class="fas fa-trash-alt"></i>' +
+        '                                </a>' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                    </div>\n' +
+        '                </div> \n';
+
+    $($.parseHTML(newPhoneHtml)).insertBefore('#phonesAddButtonArea');
+
+    phoneIDArray.push(phoneCounter);
+
+    phoneCounter ++;
+}
+// this method add new email
+function addEmail(){
+
+    var newEmailHtml = ' <div id="email'+emailCounter+'" class="form-group addedFormGroups">\n' +
+        '                    <div class="row">\n' +
+        '                        <div class="col-lg-3">\n' +
+        '                            <label for="emailLabelForm'+emailCounter+'">Label Name <span>*</span></label>\n' +
+        '                            <select name="emailLabel'+emailCounter+'" id="emailLabelForm'+emailCounter+'" class="form-control">\n' +
+        '                                <option value="0" disabled selected>Select Label Name</option>\n' +
+        '                                <option value="2">Home</option>\n' +
+        '                                <option value="3">Work</option>\n' +
+        '                                <option value="4">School</option>\n' +
+        '                                <option value="6">Other</option>\n' +
+        '                            </select>\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="emailLabelErrorMsg'+emailCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-8">\n' +
+        '                            <label for="emailValueForm'+emailCounter+'">Value <span>*</span></label>\n' +
+        '                            <input type="text" name="emailValue'+emailCounter+'" id="emailValueForm'+emailCounter+'" class="form-control">\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="emailValueErrorMsg'+emailCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-1">' +
+        '                            <div class="deleteBtnArea">' +
+        '                                <a href="javascript:void(0)" onclick="deleteEmail('+emailCounter+')" title="Delete Email">' +
+        '                                    <i class="fas fa-trash-alt"></i>' +
+        '                                </a>' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                    </div>\n' +
+        '                </div> \n';
+
+    $($.parseHTML(newEmailHtml)).insertBefore('#emailsAddButtonArea');
+
+    emailIDArray.push(emailCounter);
+
+    emailCounter ++;
+}
+// this method add new address
+function addAddress(){
+
+    var newAddressHtml = ' <div id="address'+addressCounter+'" class="form-group addedFormGroups">\n' +
+        '                    <div class="row">\n' +
+        '                        <div class="col-lg-3">\n' +
+        '                            <label for="addressLabelForm'+addressCounter+'">Label Name <span>*</span></label>\n' +
+        '                            <select name="addressLabel'+addressCounter+'" id="addressLabelForm'+addressCounter+'" class="form-control">\n' +
+        '                                <option value="0" disabled selected>Select Label Name</option>\n' +
+        '                                <option value="2">Home</option>\n' +
+        '                                <option value="3">Work</option>\n' +
+        '                                <option value="4">School</option>\n' +
+        '                                <option value="6">Other</option>\n' +
+        '                            </select>\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="addressLabelErrorMsg'+addressCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-8">\n' +
+        '                            <label for="addressValueForm'+addressCounter+'">Value <span>*</span></label>\n' +
+        '                            <textarea name="addressValue'+addressCounter+'" id="addressValueForm'+addressCounter+'" class="form-control"></textarea>\n' +
+        '                            <div class="errorMessageArea">\n' +
+        '                                <span class="text-danger" id="addressValueErrorMsg'+addressCounter+'"></span>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-lg-1">' +
+        '                            <div class="deleteBtnArea">' +
+        '                                <a href="javascript:void(0)" onclick="deleteAddress('+addressCounter+')" title="Delete Address">' +
+        '                                    <i class="fas fa-trash-alt"></i>' +
+        '                                </a>' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                    </div>\n' +
+        '                </div> \n';
+
+    $($.parseHTML(newAddressHtml)).insertBefore('#addressesAddButtonArea');
+
+    addressIDArray.push(addressCounter);
+
+    addressCounter ++;
+}
+
+// this method delete the phone
+function deletePhone(id){
+    Swal.fire({
+        title: 'Do you want to remove the phone number?',
+        showDenyButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+        customClass: {
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            openAjaxLoader();
+
+            $('#phone'+id.toString()).remove();
+
+            const index = phoneIDArray.indexOf(id);
+            phoneIDArray.splice(index, 1);
+
+            closeAjaxLoader();
+
+            toastr.success('The phone number has been successfully removed.');
+
+        } else if (result.isDenied) {
+
+        }
+    })
+}
+// this method delete the email
+function deleteEmail(id){
+    Swal.fire({
+        title: 'Do you want to remove the email address?',
+        showDenyButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+        customClass: {
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            openAjaxLoader();
+
+            $('#email'+id.toString()).remove();
+
+            const index = emailIDArray.indexOf(id);
+            emailIDArray.splice(index, 1);
+
+            closeAjaxLoader();
+
+            toastr.success('The email address has been successfully removed.');
+
+        } else if (result.isDenied) {
+
+        }
+    })
+}
+// this method delete the address
+function deleteAddress(id){
+    Swal.fire({
+        title: 'Do you want to remove the address?',
+        showDenyButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+        customClass: {
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            openAjaxLoader();
+
+            $('#address'+id.toString()).remove();
+
+            const index = addressIDArray.indexOf(id);
+            addressIDArray.splice(index, 1);
+
+            closeAjaxLoader();
+
+            toastr.success('The address has been successfully removed.');
+
+        } else if (result.isDenied) {
+
+        }
+    })
+}
 
 
 function openAjaxLoader(){
@@ -276,51 +430,3 @@ function closeAjaxLoader(){
     }, 300);
 }
 
-
-//tinymce for en description
-tinymce.init({
-    selector: '#descriptionsEnForm',
-    menubar: false,
-    plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table paste code wordcount'
-    ],
-    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | link | fullscreen | code'
-});
-
-//tinymce for en details
-tinymce.init({
-    selector: '#detailsEnForm',
-    menubar: false,
-    plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'visualblocks code fullscreen',
-        'insertdatetime media table paste code help wordcount'
-    ],
-    toolbar: 'undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist checklist | table | link image media | fullscreen | code'
-});
-
-//tinymce for tr description
-tinymce.init({
-    selector: '#descriptionsTrForm',
-    menubar: false,
-    plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table paste code wordcount'
-    ],
-    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | link | fullscreen | code'
-});
-
-//tinymce for tr details
-tinymce.init({
-    selector: '#detailsTrForm',
-    menubar: false,
-    plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'visualblocks code fullscreen',
-        'insertdatetime media table paste code help wordcount'
-    ],
-    toolbar: 'undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist checklist | table | link image media | fullscreen | code'
-});

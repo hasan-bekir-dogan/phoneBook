@@ -37,7 +37,7 @@
         <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">Groups</div>
 
         <ul class="pcoded-item pcoded-left-item">
-            <li class="pcoded-hasmenu {{ \App\Helpers\Helper::set_active(['groups']) }}">
+            <li class="pcoded-hasmenu {{ \App\Helpers\Helper::set_active(['group']) }}">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon categorySpan"><i class="ti-layout-grid2-alt"></i></span>
                     <span class="pcoded-mtext" data-i18n="nav.basic-components.main">Groups</span>
@@ -76,7 +76,7 @@
                 <ul class="pcoded-submenu">
 
                     <li>
-                        <a href="#">
+                        <a href="{{route('contact-list')}}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">List Contacts</span>
                             <span class="pcoded-mcaret"></span>
@@ -84,7 +84,7 @@
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="{{route('contact-create')}}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Add Contact</span>
                             <span class="pcoded-mcaret"></span>

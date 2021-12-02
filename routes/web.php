@@ -48,15 +48,19 @@ Route::middleware(['authAdmin'])->group( function () {
 
     // CRUD for contacts
     Route::get('contacts', [Contact::class, "index"]); // show contacts
-    Route::get('contacts/{contact}', [Contact::class, "show"]); // view('update-contact', group)
+    Route::get('contacts/{contact}', [Contact::class, "show"]); // view('update-contact', contact)
     Route::post('contacts', [Contact::class, "store"]); // create contact
-    Route::patch('contacts/{contact}', [Contact::class, "update"]); // update contact
+    Route::post('contacts/{contact}', [Contact::class, "update"]); // update contact
     Route::delete('contacts/{contact}', [Contact::class, "delete"]); // delete contact
+    // get phones, emails and addresses information to show on update contact page
+    Route::get('contact/show/other-information/{contact}', [Contact::class, "showOtherInformation"]); // show contact who have phones, emails and addresses
     // view pages for contacts
     Route::get('contact/list', [Contact::class, "contactListPage"])->name('contact-list'); // view('contact list')
     Route::get('contact/create', [Contact::class, "addContactPage"])->name('contact-create'); // view('add-contact')
     // search for contacts
-    Route::post('contact/search', [Contact::class, "search"]); // search group
+    Route::post('contact/search', [Contact::class, "search"]); // search contact
+    Route::post('contact/filter/group', [Contact::class, "filterGroup"]); // filter group
+    Route::post('contact/filter/char', [Contact::class, "filterChar"]); // filter char
 
 });
 

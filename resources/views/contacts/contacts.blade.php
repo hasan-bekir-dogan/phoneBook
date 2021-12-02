@@ -8,19 +8,19 @@
 
 @section('content')
 
-    @include('admin.blocks.loader')
+    @include('blocks.loader')
 
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
 
 
-            @include('admin.blocks.header')
+            @include('blocks.header')
 
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
 
-                    @include('admin.blocks.left-menu')
+                    @include('blocks.left-menu')
 
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
@@ -38,53 +38,77 @@
                                                         <!-- Row start -->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-xl-12">
-                                                                <div class="sub-title">Products</div>
+                                                                <div class="sub-title">Contacts</div>
                                                                 <!-- Hover table card start -->
                                                                 <div class="card productTable">
-                                                                    <div class="adminTables">
-                                                                        <div class="card-block table-border-style productTableDetailArea">
-                                                                            <div class="table-responsive">
-
-                                                                                <table id="productTable" class="table table-hover">
-                                                                                    <thead>
-                                                                                    <tr>
-                                                                                        <th>#</th>
-                                                                                        <th>SKU</th>
-                                                                                        <th>Image</th>
-                                                                                        <th>Name</th>
-                                                                                        <th>Price</th>
-                                                                                        <th>Stock</th>
-                                                                                        <th>Created Date</th>
-                                                                                        <th width="200px">Transactions</th>
-                                                                                    </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-
-                                                                                    </tbody>
-                                                                                </table>
+                                                                    <div class="productSpecification">
+                                                                        <div class="productNumberSummary">
+                                                                            <div id="totalDataNumber" class="selectLabel">
 
                                                                             </div>
                                                                         </div>
+                                                                        <div class="searchProductArea">
+                                                                            <select id="filterGroup" class="form-control">
+                                                                                <option value="-1" disabled selected>Filter as Group</option>
+                                                                                <option value="0">All Records</option>
+                                                                                @foreach($groups as $group)
+                                                                                    <option value="{{$group['id']}}">{{$group['name']}}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="searchProductArea">
+                                                                            <select id="filterAlphabet" class="form-control">
+                                                                                <option value="-1" disabled selected>Filter as Alphabetic</option>
+                                                                                <option value="0">All Records</option>
+                                                                                @foreach(range('A', 'Z') as $char)
+                                                                                    <option value="{{$char}}">{{$char}}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="searchProductArea">
+                                                                            <div class="searchLabel">
+                                                                                Find:
+                                                                            </div>
+                                                                            <input type="text" id="searchContact" class="form-control" placeholder="Search">
+                                                                        </div>
                                                                     </div>
-                                                                <!-- Hover table card end -->
+                                                                    <div id="adminProducts">
+                                                                        <div class="card-block table-border-style productTableDetailArea">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-hover">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th width="150px">Profile Photo</th>
+                                                                                        <th>Name</th>
+                                                                                        <th width="200px">Transactions</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody id="contactTableBody">
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Hover table card end -->
+                                                                </div>
                                                             </div>
+                                                            <!-- Row end -->
                                                         </div>
-                                                        <!-- Row end -->
                                                     </div>
+                                                    <!-- Bootstrap tab card end -->
                                                 </div>
-                                                <!-- Bootstrap tab card end -->
                                             </div>
                                         </div>
+                                        <!-- Page body end -->
                                     </div>
-                                    <!-- Page body end -->
                                 </div>
+                                <!-- Main-body end -->
+
                             </div>
-                            <!-- Main-body end -->
-
                         </div>
-                    </div>
 
-                </div>
+                    </div>
             </div>
         </div>
         </div>
@@ -95,6 +119,6 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="{{asset('assets-admin/js/privateJs/contacts.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/privateJs/contacts.js')}}"></script>
 @endsection
 

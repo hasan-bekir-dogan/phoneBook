@@ -17,12 +17,7 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->foreignId('contact_id')->index();
             $table->foreignId('label_name_id')->index();
-            $table->string('street', 255);
-            $table->string('postal_code', 255);
-            $table->string('district', 255);
-            $table->string('city', 255);
-            $table->string('country', 255);
-            $table->text('explicit_address');
+            $table->text('address');
             $table->timestamps();
             $table->softDeletes();
         });

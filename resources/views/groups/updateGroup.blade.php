@@ -57,9 +57,14 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="buttonArea">
-                                                                            <button type="submit" class="generalButton updateButton">UPDATE</button>
-                                                                            <a href="{{route('group-list')}}" class="generalButton cancelButton">CANCEL</a>
+                                                                        <div class="buttonAreaHeadSection">
+                                                                            <div class="buttonArea">
+                                                                                <button type="submit" class="generalButton updateButton">UPDATE</button>
+                                                                                <a href="{{route('group-list')}}" class="generalButton cancelButton">CANCEL</a>
+                                                                            </div>
+                                                                            <div class="buttonArea">
+                                                                                <a id="deleteGroupButtonId" href="javascript:void(0)" class="generalButton cancelButton deleteButton">DELETE</a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </form>

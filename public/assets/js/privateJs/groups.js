@@ -102,16 +102,26 @@ function deleteGroup(groupId){
 $('#searchGroup').on('keypress', function(e) {
     if(e.which == 13) {
         var searchWord = $('#searchGroup').val();
-        searchWord = $.trim(searchWord);
-        if(searchWord !== '' && searchWord !== ' ')
+        if(searchWord !== '') {
+            searchWord = $.trim(searchWord);
+            if (searchWord !== '' && searchWord !== ' ')
+                search(searchWord);
+        }
+        else{
             search(searchWord);
+        }
     }
 });
 $('#searchGroup').on('input', function() {
     var searchWord = $('#searchGroup').val();
-    searchWord = $.trim(searchWord);
-    if(searchWord !== '' && searchWord !== ' ')
+    if(searchWord !== ''){
+        searchWord = $.trim(searchWord);
+        if(searchWord !== '' && searchWord !== ' ')
+            search(searchWord);
+    }
+    else{
         search(searchWord);
+    }
 });
 
 function search(searchWord){

@@ -382,33 +382,36 @@ body {
   align-content: center;
 }
 .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection {
-  width: 100%;
   position: relative;
+  width: 200px;
+  height: 200px;
 }
 .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection .imageFileInput {
   position: relative;
   z-index: 4;
   width: 100%;
-  height: 100px;
+  height: 100%;
   margin: 0;
   opacity: 0;
   transition: all 0.2s;
   cursor: pointer;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
 }
 .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection .imageFileLabel {
   position: absolute;
   top: 0;
-  right: 0;
   left: 0;
-  z-index: 3;
-  height: 100px;
-  color: #9B8ED8;
-  background-color: #f5f6f7;
-  border: 2px solid #f5f6f7;
+  z-index: 2;
+  height: 100%;
   width: 100%;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  color: #9B8ED8;
+  background-color: transparent;
+  border: 2px solid transparent;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
   font-size: 50px;
   display: flex;
   flex-direction: column;
@@ -420,11 +423,64 @@ body {
 }
 .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection .imageFileLabel > i {
   opacity: 0.9;
+  display: none;
+}
+.userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection input:hover + label, .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection input:active + label {
   cursor: pointer !important;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.05);
   border: 2px dashed #EEEEEE;
+}
+.userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection input:hover + label i, .userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection input:active + label i {
+  display: block;
+}
+.userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection .deleteImageButton {
+  position: absolute;
+  top: 9px;
+  right: 18px;
+  z-index: 10;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  background-color: #696763;
+  border: 3px solid white;
+  font-size: 15px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.userInformationArea .chooseImageArea .selectImageHeadArea .chooseImagesSection .deleteImageButton i {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.userInformationArea .chooseImageArea .selectImageHeadArea .imageSectionButtons label {
+  font-size: 16px;
+  color: #9B8ED8;
+  font-family: "Campton SemiBold";
+  margin-top: 10px;
+  cursor: pointer;
 }
 .userInformationArea .chooseImageArea .showImagesSection {
   width: 100%;
@@ -495,6 +551,29 @@ body {
   padding: 30px 15px 0 15px;
   color: #5a5855;
 }
+.userInformationArea .buttonAreaHeadSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+.userInformationArea .buttonAreaHeadSection .buttonArea .deleteButton {
+  border-color: #FC6180 !important;
+  color: #FC6180 !important;
+}
+.userInformationArea .buttonAreaHeadSection .buttonArea .deleteButton:hover {
+  border-color: #FC6180 !important;
+  color: #FC6180 !important;
+}
+.userInformationArea .buttonAreaHeadSection .buttonArea .deleteButton:active {
+  border-color: #FC6180 !important;
+  color: #FC6180 !important;
+}
+.userInformationArea .buttonAreaHeadSection .buttonArea .deleteButton:focus {
+  border-color: #FC6180 !important;
+  color: #FC6180 !important;
+}
 .userInformationArea .buttonArea {
   display: flex;
   flex-direction: row;
@@ -537,6 +616,76 @@ body {
 .userInformationArea .userDetailsButtonArea {
   padding: 20px 15px 0 15px;
 }
+.userInformationArea .addedFormGroups {
+  padding-bottom: 0;
+}
+.userInformationArea .addedFormGroups .deleteBtnArea {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  align-content: flex-end;
+  margin-top: 22px;
+  border: 1px solid transparent;
+}
+.userInformationArea .addedFormGroups .deleteBtnArea a {
+  line-height: 1;
+  font-size: 17px;
+  color: #dc2626;
+}
+.userInformationArea .addedFormGroups .deleteBtnArea a:hover {
+  color: #dc2626;
+}
+.userInformationArea .addedFormGroups .deleteBtnArea a:active {
+  color: #dc2626;
+}
+.userInformationArea .addedFormGroups .deleteBtnArea a:focus {
+  color: #dc2626;
+}
+
+.panelFormArea .form-group {
+  margin-bottom: 0;
+}
+.panelFormArea .form-group .row {
+  width: 100%;
+  margin: 0;
+}
+.panelFormArea .form-group input, .panelFormArea .form-group textarea {
+  margin-bottom: 0 !important;
+  border-color: rgba(204, 204, 204, 0.75);
+}
+.panelFormArea .form-group textarea {
+  height: 100px;
+}
+.panelFormArea .form-group .form-control {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #99c1b2;
+}
+.panelFormArea .form-group label {
+  color: #2c343b;
+}
+.panelFormArea .form-group label span {
+  color: #dc2626;
+}
+.panelFormArea .form-group .form-control:focus {
+  border: 1px solid #2c343b;
+  color: #2c343b;
+}
+.panelFormArea .form-group .form-control:disabled {
+  background-color: #EEEEEE;
+  color: #2c343b;
+  opacity: 0.7;
+  cursor: initial;
+}
+.panelFormArea .form-group .nullInformationArea:disabled {
+  color: #dc2626;
+}
+.panelFormArea .form-group .errorMessageArea {
+  line-height: 1.8;
+}
 
 .generalButton {
   background-color: #f27a1a;
@@ -550,6 +699,57 @@ body {
 }
 .generalButton:hover {
   background-color: #e77216;
+}
+
+.addModalButton {
+  background-color: #38bf8e;
+  border: 1px solid #38bf8e;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgba(56, 191, 142, 0.2);
+  padding: 8px 20px;
+  font-size: 14px;
+  display: block;
+  width: 150px;
+}
+.addModalButton:hover {
+  background-color: #38bf8e;
+  color: white;
+}
+.addModalButton:active {
+  background-color: #38bf8e;
+  color: white;
+}
+.addModalButton:focus {
+  background-color: #38bf8e;
+  color: white;
+}
+
+.flexCenter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.saveButton {
+  background-color: #f27a1a;
+  color: white;
+  text-align: center;
+  padding: 6px 12px;
+  border: 1px solid #f27a1a;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.saveButton:hover {
+  background-color: #e77216;
+}
+.saveButton:disabled:hover {
+  background-color: #868e96;
+  border-color: #868e96;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -707,58 +907,43 @@ input[type=number] {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-.productTable .paginationArea {
-  margin-top: 20px;
+.productTable .filterAlphabetArea {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
   align-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
-.productTable .paginationArea .recordNumber {
-  width: fit-content;
-  color: #2c343b;
-  font-size: 14px;
-}
-.productTable .paginationArea .paginationSection > ul {
+.productTable .filterAlphabetArea li {
+  background-color: #687a88;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   align-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  flex-wrap: wrap;
+  margin-left: 5px;
 }
-.productTable .paginationArea .paginationSection > ul li > button {
-  width: 100%;
-  height: 100%;
-  padding: 8px 12px;
-  background-color: white;
-  border: 1px solid #cccccc;
-  border-right: none;
-  color: #2c343b;
-  outline: none !important;
-  cursor: pointer;
+.productTable .filterAlphabetArea li:first-child {
+  margin-left: 0;
 }
-.productTable .paginationArea .paginationSection > ul li > button:hover {
-  background-color: #f9fafb;
-  color: #687a88;
-}
-.productTable .paginationArea .paginationSection > ul li > button.disabled {
-  color: #bebebe;
-  pointer-events: none;
-  cursor: default;
-}
-.productTable .paginationArea .paginationSection > ul li > button.active {
-  background-color: #687a88;
-  color: #f9fafb;
-}
-.productTable .paginationArea .paginationSection > ul li:first-child > button {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-.productTable .paginationArea .paginationSection > ul li:last-child > button {
-  border-right: 1px solid #cccccc;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+
+.contactsPhoto {
+  width: 55px;
+  height: 55px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .header-navbar .navbar-wrapper .navbar-logo .mobile-menu {

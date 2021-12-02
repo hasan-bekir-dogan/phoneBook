@@ -8,18 +8,18 @@
 
 @section('content')
 
-    @include('admin.blocks.loader')
+    @include('blocks.loader')
 
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
 
-            @include('admin.blocks.header')
+            @include('blocks.header')
 
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
 
-                    @include('admin.blocks.left-menu')
+                    @include('blocks.left-menu')
 
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
@@ -37,28 +37,31 @@
                                                         <!-- Row start -->
                                                         <div class="row">
                                                             <div class="col-lg-12 col-xl-12">
-                                                                <div class="sub-title">Add New Product</div>
+                                                                <div class="sub-title">Add New Contact</div>
                                                                 <!-- Tab panes -->
-                                                                <form id="addProductForm" enctype='multipart/form-data'>
+                                                                <form id="addContactForm" enctype='multipart/form-data'>
                                                                     @csrf
                                                                     <div class="userInformationArea">
                                                                         <div class="alert alert-success" role="alert" id="successMsg" style="display: none" >
-                                                                            The product information has successfully added!
+                                                                            The contact has successfully added!
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="row">
-                                                                                <div class="col-lg-6">
-                                                                                    <label for="productPriceForm">Price <span>*</span></label>
-                                                                                    <input type="text" id="productPriceForm" class="form-control">
-                                                                                    <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="priceErrorMsg"></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-6">
-                                                                                    <label for="discountForm">Discount (%)</label>
-                                                                                    <input type="text" id="discountForm" class="form-control" value="0">
-                                                                                    <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="discountRateErrorMsg"></span>
+                                                                                <div class="col-lg-12 chooseImageArea">
+                                                                                    <div class="inputArea selectImageHeadArea">
+                                                                                        <div class="chooseImagesSection">
+                                                                                            <img id="profilePhotoArea" src="{{asset('assets/images/profile-default-photo.png')}}" alt="Profile Photo">
+                                                                                            <input type="file" name="photo" class="form-control imageFileInput" id="profilePhoto" title="Choose Photo">
+                                                                                            <label class="imageFileLabel" for="profilePhoto">
+                                                                                                <i class="fal fa-cloud-upload"></i>
+                                                                                            </label>
+                                                                                            <div class="errorMessageArea">
+                                                                                                <span class="text-danger" id="profilePhotoErrorMsg"></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="imageSectionButtons">
+                                                                                            <label id="editPhotoButton" for="profilePhoto">Add Photo</label>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -66,17 +69,17 @@
                                                                         <div class="form-group">
                                                                             <div class="row">
                                                                                 <div class="col-lg-6">
-                                                                                    <label for="productDiscountedPriceForm">Discounted Price</label>
-                                                                                    <input type="text" id="productDiscountedPriceForm" class="form-control">
+                                                                                    <label for="firstNameForm">First Name <span>*</span></label>
+                                                                                    <input type="text" name="firstName" id="firstNameForm" class="form-control">
                                                                                     <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="discountedPriceErrorMsg"></span>
+                                                                                        <span class="text-danger" id="firstNameErrorMsg"></span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-6">
-                                                                                    <label for="cargoPriceForm">Cargo Price <span>*</span></label>
-                                                                                    <input type="text" id="cargoPriceForm" class="form-control">
+                                                                                    <label for="lastNameForm">Last Name</label>
+                                                                                    <input type="text" name="lastName" id="lastNameForm" class="form-control">
                                                                                     <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="cargoPriceErrorMsg"></span>
+                                                                                        <span class="text-danger" id="lastNameErrorMsg"></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -84,22 +87,17 @@
                                                                         <div class="form-group">
                                                                             <div class="row">
                                                                                 <div class="col-lg-6">
-                                                                                    <label for="stockForm">Stock <span>*</span></label>
-                                                                                    <input type="text" id="stockForm" class="form-control">
+                                                                                    <label for="companyForm">Company</label>
+                                                                                    <input type="text" name="company" id="companyForm" class="form-control">
                                                                                     <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="stockErrorMsg"></span>
+                                                                                        <span class="text-danger" id="companyErrorMsg"></span>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-6">
-                                                                                    <label for="brandForm">Brand <span>*</span></label>
-                                                                                    <select id="brandForm" class="form-control">
-                                                                                        <option value="" disabled selected>Select Brand</option>
-                                                                                        @foreach($brands as $brand)
-                                                                                            <option value="{{$brand['name']}}">{{$brand['name']}}</option>
-                                                                                        @endforeach
-                                                                                    </select>
+                                                                                    <label for="birthdayForm">Birthday</label>
+                                                                                    <input type="date" name="birthday" id="birthdayForm" class="form-control">
                                                                                     <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="brandErrorMsg"></span>
+                                                                                        <span class="text-danger" id="birthdayErrorMsg"></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -107,110 +105,67 @@
                                                                         <div class="form-group">
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
-                                                                                    <label for="categoryForm">Category <span>*</span></label>
-                                                                                    <select id="categoryForm" class="form-control">
-                                                                                        <option value="" disabled selected>Select Category</option>
-                                                                                        @foreach($categories as $category)
-                                                                                            <option value="{{$category['cat_id']}}">{{$category['name']}}</option>
+                                                                                    <label for="groupForm">Group</label>
+                                                                                    <select id="groupForm" name="group" class="form-control">
+                                                                                        <option value="0" selected>None</option>
+                                                                                        @foreach($groups as $group)
+                                                                                            <option value="{{$group['id']}}">{{$group['name']}}</option>
                                                                                         @endforeach
                                                                                     </select>
-                                                                                    <div class="errorMessageArea">
-                                                                                        <span class="text-danger" id="categoryErrorMsg"></span>
-                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="row">
-                                                                                <div class="col-lg-12 chooseImageArea">
-                                                                                    <label for="productImageForm">Images <span>*</span></label>
-                                                                                    <div class="inputArea selectImageHeadArea">
-                                                                                        <div class="chooseImagesSection">
-                                                                                            <input type="file" name="images[]" class="form-control imageFileInput" id="images" multiple="multiple">
-                                                                                            <label class="imageFileLabel" for="images">
-                                                                                                <i class="fal fa-cloud-upload"></i>
-                                                                                            </label>
-                                                                                            <div class="errorMessageArea">
-                                                                                                <span class="text-danger" id="imagesErrorMsg"></span>
+                                                                                <div class="col-lg-12">
+                                                                                    <label for="notesForm">Notes</label>
+                                                                                    <textarea class="form-control" name="notes" id="notesForm"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="productDetailsArea">
+                                                                            <div class="subTitle">
+                                                                                Phone
+                                                                            </div>
+                                                                            <div class="form-group productDetailsSubArea">
+                                                                                <div class="tabArea">
+                                                                                    <div class="tabContentArea">
+                                                                                        <div class="tab-content">
+                                                                                            <div class="tab-pane active" role="tabpanel">
+                                                                                                <div class="gridBody">
+                                                                                                    <div id="phonesAddButtonArea" class="form-group">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-lg-12 flexCenter">
+                                                                                                                <a id="phoneAddButtonId" href="javascript:void(0)" class="generalButton addModalButton">
+                                                                                                                    <i class="far fa-plus-circle"></i> Add Phone
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="showImagesSection">
-                                                                                        <ul class="imgPreview">
-
-                                                                                        </ul>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="productDetailsArea">
                                                                             <div class="subTitle">
-                                                                                Product Details
+                                                                                E-mail
                                                                             </div>
                                                                             <div class="form-group productDetailsSubArea">
                                                                                 <div class="tabArea">
-                                                                                    <div class="tabTitleArea">
-                                                                                        <ul class="nav nav-tabs" role="tablist">
-                                                                                            <li class="nav-item">
-                                                                                                <a id="enLink" class="nav-link active" data-toggle="tab" href="#en" role="tab">
-                                                                                                    EN
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item">
-                                                                                                <a id="trLink" class="nav-link" data-toggle="tab" href="#tr" role="tab">
-                                                                                                    TR
-                                                                                                </a>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </div>
                                                                                     <div class="tabContentArea">
                                                                                         <div class="tab-content">
-                                                                                            <div class="tab-pane active" id="en" role="tabpanel">
+                                                                                            <div class="tab-pane active" role="tabpanel">
                                                                                                 <div class="gridBody">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="productNameEnForm">Name <span>*</span></label>
-                                                                                                            <input type="text" id="productNameEnForm" class="form-control">
-                                                                                                            <div class="errorMessageArea">
-                                                                                                                <span class="text-danger" id="nameEnErrorMsg"></span>
+                                                                                                    <div id="emailsAddButtonArea" class="form-group">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-lg-12 flexCenter">
+                                                                                                                <a id="emailAddButtonId" href="javascript:void(0)" class="generalButton addModalButton">
+                                                                                                                    <i class="far fa-plus-circle"></i> Add E-mail
+                                                                                                                </a>
                                                                                                             </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="descriptionsEnForm">Description</label>
-                                                                                                            <textarea class="form-control" id="descriptionsEnForm"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="detailsEnForm">Details</label>
-                                                                                                            <textarea class="form-control" id="detailsEnForm"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="tab-pane" id="tr" role="tabpanel">
-                                                                                                <div class="gridBody">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="productNameTrForm">Name <span>*</span></label>
-                                                                                                            <input type="text" id="productNameTrForm" class="form-control">
-                                                                                                            <div class="errorMessageArea">
-                                                                                                                <span class="text-danger" id="nameTrErrorMsg"></span>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="descriptionsTrForm">Description</label>
-                                                                                                            <textarea class="form-control" id="descriptionsTrForm"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-lg-12">
-                                                                                                            <label for="detailsTrForm">Details</label>
-                                                                                                            <textarea class="form-control" id="detailsTrForm"></textarea>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -220,9 +175,37 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="productDetailsArea">
+                                                                            <div class="subTitle">
+                                                                                Address
+                                                                            </div>
+                                                                            <div class="form-group productDetailsSubArea">
+                                                                                <div class="tabArea">
+                                                                                    <div class="tabContentArea">
+                                                                                        <div class="tab-content">
+                                                                                            <div class="tab-pane active" role="tabpanel">
+                                                                                                <div class="gridBody">
+                                                                                                    <div id="addressesAddButtonArea" class="form-group">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-lg-12 flexCenter">
+                                                                                                                <a id="addressAddButtonId" href="javascript:void(0)" class="generalButton addModalButton">
+                                                                                                                    <i class="far fa-plus-circle"></i> Add Address
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
                                                                         <div class="buttonArea">
                                                                             <button type="submit" class="generalButton updateButton">ADD</button>
-                                                                            <a href="{{route('admin.contacts')}}" class="generalButton cancelButton">CANCEL</a>
+                                                                            <a href="{{route('contact-list')}}" class="generalButton cancelButton">CANCEL</a>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -254,8 +237,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('assets-admin/js/tinymce/tinymce.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets-admin/js/privateJs/addContact.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/privateJs/addContact.js')}}"></script>
 @endsection
 
 
