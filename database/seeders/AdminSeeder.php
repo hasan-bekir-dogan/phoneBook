@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
 
         // And now, let's create a few admin in our database:
         Admin::create([
-            'name' => "Administrator",
+            'name' => "Hasan Bekir DOĞAN",
             'email' => "admin@contact.com",
             'password' => Hash::make("admin.123")
         ]);

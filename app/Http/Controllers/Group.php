@@ -6,32 +6,39 @@ use App\Models\Contacts;
 use App\Models\Groups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Group extends Controller
 {
     public function index(){
-        $data = Cache::remember('groups', 30*60, function () {
+        $currentPage = request()->get('page',1);
+
+        $groups = Cache::remember('groups/page' . $currentPage, 10, function(){
             return Groups::selectRaw('id, name')
                 ->orderBy('name')
-                ->get();
+                ->paginate(15);
         });
-        $totalDataNumber = Cache::remember('totalGroupNumber', 30*60, function () {
+
+        $totalGroupNumber = Cache::remember('totalGroupNumber', 30*60, function(){
             return Groups::count();
         });
 
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('groups.groups', [
+            'groups' => $groups,
+            'totalGroupNumber' => $totalGroupNumber
+        ]);
     }
 
     public function show($id){
-        $data = Groups::selectRaw('id, name')
-            ->where('id', $id)
-            ->get();
+        $group = Cache::remember('group-' . $id, 10, function() use($id){
+            return Groups::selectRaw('id, name')
+                ->where('id', $id)
+                ->orderBy('name')
+                ->get();
+        });
 
         return view('groups.updateGroup', [
-            'data' => $data[0]
+            'data' => $group[0]
         ]);
     }
 
@@ -54,12 +61,7 @@ class Group extends Controller
                 ]);
 
         // caching area
-        $groupData = Groups::selectRaw('id, name')
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('groups', $groupData, 30*60);
-        Cache::put('totalGroupNumber', $groupData->count(), 30*60);
+        Cache::put('totalGroupNumber', Groups::count(), 30*60);
 
         return response()->json([
             'status' => 'successful'
@@ -75,12 +77,7 @@ class Group extends Controller
                 ]);
 
         // caching area
-        $groupData = Groups::selectRaw('id, name')
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('groups', $groupData, 30*60);
-        Cache::put('totalGroupNumber', $groupData->count(), 30*60);
+        Cache::put('totalGroupNumber', Groups::count(), 30*60);
 
         return response()->json([
             'status' => 'successful'
@@ -102,37 +99,30 @@ class Group extends Controller
         $group->save();
 
         // caching area
-        $groupData = Groups::selectRaw('id, name')
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('groups', $groupData, 30*60);
-        Cache::put('totalGroupNumber', $groupData->count(), 30*60);
+        Cache::put('totalGroupNumber', Groups::count(), 30*60);
 
         return response()->json([
             'status' => 'successful'
         ]);
     }
 
-    public function groupListPage(){
-        return view('groups.groups');
-    }
     public function addGroupPage(){
         return view('groups.addGroup');
     }
-
     public function search(Request $request){
         $search_word = $request->search_word;
 
-        $data = Groups::selectRaw('id, name')
-                        ->where('name', 'ILIKE', '%' . $search_word . '%')
-                        ->get();
+        $groups = Groups::selectRaw('id, name')
+                ->where('name', 'ILIKE', '%' . $search_word . '%')
+                ->orderBy('name')
+                ->paginate(15);
 
-        $totalDataNumber = $data->count();
+        $totalGroupNumber = Groups::where('name', 'ILIKE', '%' . $search_word . '%')
+                ->count();
 
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('groups.groups', [
+            'groups' => $groups,
+            'totalGroupNumber' => $totalGroupNumber
+        ]);
     }
 }

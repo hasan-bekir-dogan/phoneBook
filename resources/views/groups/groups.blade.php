@@ -45,14 +45,20 @@
                                                                     <div class="productSpecification">
                                                                         <div class="productNumberSummary">
                                                                             <div id="totalDataNumber" class="selectLabel">
-
+                                                                                {{$totalGroupNumber}} groups
                                                                             </div>
                                                                         </div>
                                                                         <div class="searchProductArea">
                                                                             <div class="searchLabel">
                                                                                 Find:
                                                                             </div>
-                                                                            <input type="text" id="searchGroup" class="form-control" placeholder="Search">
+                                                                            <form action="{{route('group.search')}}" method="GET">
+                                                                                @if(app('request')->input('search_word'))
+                                                                                    <input type="text" name="search_word" id="searchGroup" class="form-control" placeholder="Search" value="{{ app('request')->input('search_word') }}">
+                                                                                @else
+                                                                                    <input type="text" name="search_word" id="searchGroup" class="form-control" placeholder="Search">
+                                                                                @endif
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                     <div id="adminProducts">
@@ -65,10 +71,31 @@
                                                                                         <th width="200px">Transactions</th>
                                                                                     </tr>
                                                                                     </thead>
-                                                                                    <tbody id="groupTableBody">
-
+                                                                                    <tbody>
+                                                                                    @foreach($groups as $group)
+                                                                                        <tr>
+                                                                                            <td style="vertical-align: middle">{{$group->name}}</td>
+                                                                                            <td style="vertical-align: middle" class="transactionArea">
+                                                                                                <div class="transactionSubArea">
+                                                                                                    <a class="editButton" href="/groups/{{$group->id}}">
+                                                                                                        <i class="fal fa-edit"></i> Edit
+                                                                                                    </a>
+                                                                                                    <button class="deleteButton" type=button onclick="deleteGroup({{$group->id}})">
+                                                                                                        <i class="far fa-trash-alt"></i> Delete
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endforeach
                                                                                     </tbody>
                                                                                 </table>
+                                                                                <div class="paginationLinksArea">
+                                                                                    @if(app('request')->input('search_word'))
+                                                                                        {!! $groups->appends(['search_word' => app('request')->input('search_word')])->links() !!}
+                                                                                    @else
+                                                                                        {!! $groups->links() !!}
+                                                                                    @endif
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

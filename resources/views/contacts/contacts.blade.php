@@ -42,34 +42,47 @@
                                                                 <!-- Hover table card start -->
                                                                 <div class="card productTable">
                                                                     <div class="productSpecification">
-                                                                        <div class="productNumberSummary">
-                                                                            <div id="totalDataNumber" class="selectLabel">
-
-                                                                            </div>
+                                                                        <div class="searchProductArea">
+                                                                            <form action="{{route('contact.filter.group')}}" method="GET" name="groupForm">
+                                                                                <select id="filterGroup" name="group_id" class="form-control" onchange="groupForm.submit();">
+                                                                                    <option value="-1" disabled selected>Filter as Group</option>
+                                                                                    <option value="0">All Records</option>
+                                                                                    @foreach($groups as $group)
+                                                                                        @if((int)app('request')->input('group_id') === (int)$group['id'])
+                                                                                            <option selected value="{{$group['id']}}">{{$group['name']}}</option>
+                                                                                        @else
+                                                                                            <option value="{{$group['id']}}">{{$group['name']}}</option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </form>
                                                                         </div>
                                                                         <div class="searchProductArea">
-                                                                            <select id="filterGroup" class="form-control">
-                                                                                <option value="-1" disabled selected>Filter as Group</option>
-                                                                                <option value="0">All Records</option>
-                                                                                @foreach($groups as $group)
-                                                                                    <option value="{{$group['id']}}">{{$group['name']}}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="searchProductArea">
-                                                                            <select id="filterAlphabet" class="form-control">
-                                                                                <option value="-1" disabled selected>Filter as Alphabetic</option>
-                                                                                <option value="0">All Records</option>
-                                                                                @foreach(range('A', 'Z') as $char)
-                                                                                    <option value="{{$char}}">{{$char}}</option>
-                                                                                @endforeach
-                                                                            </select>
+                                                                            <form action="{{route('contact.filter.char')}}" method="GET" name="alphabetForm">
+                                                                                <select id="filterAlphabet" name="char" class="form-control" onchange="alphabetForm.submit();">
+                                                                                    <option value="-1" disabled selected>Filter as Alphabetic</option>
+                                                                                    <option value="0">All Records</option>
+                                                                                    @foreach(range('A', 'Z') as $char)
+                                                                                        @if(app('request')->input('char') === $char)
+                                                                                            <option selected value="{{$char}}">{{$char}}</option>
+                                                                                        @else
+                                                                                            <option value="{{$char}}">{{$char}}</option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </form>
                                                                         </div>
                                                                         <div class="searchProductArea">
                                                                             <div class="searchLabel">
                                                                                 Find:
                                                                             </div>
-                                                                            <input type="text" id="searchContact" class="form-control" placeholder="Search">
+                                                                            <form action="{{route('contact.search')}}" method="GET">
+                                                                                @if(app('request')->input('search_word'))
+                                                                                    <input type="text" name="search_word" id="searchContact" class="form-control" placeholder="Search" value="{{ app('request')->input('search_word') }}">
+                                                                                @else
+                                                                                    <input type="text" name="search_word" id="searchContact" class="form-control" placeholder="Search">
+                                                                                @endif
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                     <div id="adminProducts">
@@ -83,10 +96,36 @@
                                                                                         <th width="200px">Transactions</th>
                                                                                     </tr>
                                                                                     </thead>
-                                                                                    <tbody id="contactTableBody">
-
+                                                                                    <tbody>
+                                                                                        @foreach($contacts as $contact)
+                                                                                            <tr>
+                                                                                                <td style="vertical-align: middle"><img class="contactsPhoto" src="/{{$contact->profile_photo_path}}" alt="Profile Photo"></td>
+                                                                                                <td style="vertical-align: middle">{{$contact->name}}</td>
+                                                                                                <td style="vertical-align: middle" class="transactionArea">
+                                                                                                    <div class="transactionSubArea">
+                                                                                                        <a class="editButton" href="/contacts/{{$contact->id}}">
+                                                                                                            <i class="fal fa-edit"></i> Edit
+                                                                                                        </a>
+                                                                                                        <button class="deleteButton" type=button onclick="deleteContact({{$contact->id}})">
+                                                                                                            <i class="far fa-trash-alt"></i> Delete
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endforeach
                                                                                     </tbody>
                                                                                 </table>
+                                                                                <div class="paginationLinksArea">
+                                                                                    @if(app('request')->input('search_word'))
+                                                                                        {!! $contacts->appends(['search_word' => app('request')->input('search_word')])->links() !!}
+                                                                                    @elseif(app('request')->input('group_id'))
+                                                                                        {!! $contacts->appends(['group_id' => app('request')->input('group_id')])->links() !!}
+                                                                                    @elseif(app('request')->input('char'))
+                                                                                        {!! $contacts->appends(['char' => app('request')->input('char')])->links() !!}
+                                                                                    @else
+                                                                                        {!! $contacts->links() !!}
+                                                                                    @endif
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

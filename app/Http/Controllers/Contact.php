@@ -15,28 +15,37 @@ use Illuminate\Support\Facades\DB;
 class Contact extends Controller
 {
     public function index(){
-        $data = Cache::remember('contacts', 30*60, function () {
+        $currentPage = request()->get('page',1);
+
+        $contacts = Cache::remember('contacts/page' . $currentPage, 10, function(){
             return Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                ->orderBy('name')
+                ->paginate(15);
+        });
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
                 ->orderBy('name')
                 ->get();
         });
-        $totalDataNumber = Cache::remember('totalContactNumber', 30*60, function () {
-            return Contacts::count();
-        });
 
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('contacts.contacts', [
+            'contacts' => $contacts,
+            'groups' => $groups
+        ]);
     }
 
     public function show($id){
-        $groups = Groups::selectRaw('id, name')
-            ->get();
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
+                ->orderBy('name')
+                ->get();
+        });
 
-        $contact = Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
-            ->where('id', $id)
-            ->get();
+        $contact = Cache::remember('contact-' . $id, 10, function() use($id){
+            return Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
+                ->where('id', $id)
+                ->get();
+        });
 
         return view('contacts.updateContact', [
             'groups' => $groups,
@@ -97,8 +106,11 @@ class Contact extends Controller
         $name = "";
         if ($request->hasFile('photo')){
 
-            $photoPath = Contacts::where('id', $id)
-                ->get('profile_photo_path');
+            $photoPath = Cache::remember('contact-' . $id, 10, function() use($id){
+                return Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
+                    ->where('id', $id)
+                    ->get();
+            });
 
             $photoPath = strval($photoPath[0]['profile_photo_path']);
 
@@ -119,8 +131,12 @@ class Contact extends Controller
         }
         else{
             if($deletedPhotoControl === true || $deletedPhotoControl === 'true') {
-                $photoPath = Contacts::where('id', $id)
-                    ->get('profile_photo_path');
+
+                $photoPath = Cache::remember('contact-' . $id, 10, function() use($id){
+                    return Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
+                        ->where('id', $id)
+                        ->get();
+                });
 
                 $photoPath = strval($photoPath[0]['profile_photo_path']);
 
@@ -132,8 +148,11 @@ class Contact extends Controller
                 $name = "assets/images/profile-default-photo.png";
             }
             else{
-                $photoPath = Contacts::where('id', $id)
-                    ->get('profile_photo_path');
+                $photoPath = Cache::remember('contact-' . $id, 10, function() use($id){
+                    return Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
+                        ->where('id', $id)
+                        ->get();
+                });
 
                 $name = strval($photoPath[0]['profile_photo_path']);
             }
@@ -232,12 +251,7 @@ class Contact extends Controller
         }
 
         // caching area
-        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('contacts', $contactData, 30*60);
-        Cache::put('totalContactNumber', $contactData->count(), 30*60);
+        Cache::put('totalContactNumber', Contacts::count(), 30*60);
 
 
         return response()->json([
@@ -245,8 +259,11 @@ class Contact extends Controller
         ]);
     }
     public function delete($id){
-        $photoPath = Contacts::where('id', $id)
-            ->get('profile_photo_path');
+        $photoPath = Cache::remember('contact-' . $id, 10, function() use($id){
+            return Contacts::selectRaw('id, group_id, profile_photo_path, first_name, last_name, company, birthday, notes')
+                ->where('id', $id)
+                ->get();
+        });
 
         $photoPath = strval($photoPath[0]['profile_photo_path']);
 
@@ -269,12 +286,7 @@ class Contact extends Controller
             ->delete();
 
         // caching area
-        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('contacts', $contactData, 30*60);
-        Cache::put('totalContactNumber', $contactData->count(), 30*60);
+        Cache::put('totalContactNumber', Contacts::count(), 30*60);
 
         return response()->json([
             'status' => 'successful'
@@ -386,30 +398,30 @@ class Contact extends Controller
         }
 
         // caching area
-        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-            ->orderBy('name')
-            ->get();
-
-        Cache::put('contacts', $contactData, 30*60);
-        Cache::put('totalContactNumber', $contactData->count(), 30*60);
+        Cache::put('totalContactNumber', Contacts::count(), 30*60);
 
 
         return response()->json([
             'status' => 'successful'
         ]);
     }
+
     public function showOtherInformation($id){
-        $phones = Phones::selectRaw('id, label_name_id, phone')
-            ->where('contact_id', $id)
-            ->get();
-
-        $emails = Emails::selectRaw('id, label_name_id, email')
-            ->where('contact_id', $id)
-            ->get();
-
-        $addresses = Addresses::selectRaw('id, label_name_id, address')
-            ->where('contact_id', $id)
-            ->get();
+        $phones = Cache::remember('phone-' . $id, 10, function() use($id){
+            return Phones::selectRaw('id, label_name_id, phone')
+                ->where('contact_id', $id)
+                ->get();
+        });
+        $emails = Cache::remember('email-' . $id, 10, function() use($id){
+            return Emails::selectRaw('id, label_name_id, email')
+                ->where('contact_id', $id)
+                ->get();
+        });
+        $addresses = Cache::remember('address-' . $id, 10, function() use($id){
+            return Addresses::selectRaw('id, label_name_id, address')
+                ->where('contact_id', $id)
+                ->get();
+        });
 
         return response()->json([
             'phones' => $phones,
@@ -418,25 +430,24 @@ class Contact extends Controller
         ]);
     }
 
-    public function contactListPage(){
-        $groups = Groups::selectRaw('id, name')
-                        ->get();
-
-        return view('contacts.contacts', [
-            'groups' => $groups
-        ]);
-    }
     public function addContactPage(){
-        $groups = Groups::selectRaw('id, name')
-                        ->get();
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
+                ->orderBy('name')
+                ->get();
+        });
 
-        $phoneLabelNames = LabelNameTypes::selectRaw('id, name')
-                                        ->get();
+        $phoneLabelNames = Cache::rememberForever('phoneLabelNameTypes', function () {
+            return LabelNameTypes::selectRaw('id, name')
+                ->get();
+        });
 
-        $emailAndAddressLabelNames = LabelNameTypes::selectRaw('id, name')
-                                        ->where('id', '!=', 1)
-                                        ->where('id', '!=', 5)
-                                        ->get();
+        $emailAndAddressLabelNames = Cache::rememberForever('emailAndAddressLabelNameTypes', function () {
+            return LabelNameTypes::selectRaw('id, name')
+                ->where('id', '!=', 1)
+                ->where('id', '!=', 5)
+                ->get();
+        });
 
         return view('contacts.addContact', [
             'groups' => $groups,
@@ -447,59 +458,75 @@ class Contact extends Controller
     public function search(Request $request){
         $search_word = $request->search_word;
 
-        $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-                        ->where('first_name', 'ILIKE', '%' . $search_word . '%')
-                        ->orWhere('last_name', 'ILIKE', '%' . $search_word . '%')
-                        ->get();
+        $contacts = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                ->where('first_name', 'ILIKE', '%' . $search_word . '%')
+                ->orWhere('last_name', 'ILIKE', '%' . $search_word . '%')
+                ->orderBy('name')
+                ->paginate(15);
 
-        $totalDataNumber = $data->count();
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
+                ->orderBy('name')
+                ->get();
+        });
 
-
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('contacts.contacts', [
+            'contacts' => $contacts,
+            'groups' => $groups
+        ]);
     }
     public function filterGroup(Request $request){
-        $id = $request->id;
+        $id = $request->group_id;
 
         if($id === 0 || $id === '0'){
-            $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-                ->get();
+            $contacts = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                    ->orderBy('name')
+                    ->paginate(15);
         }
         else {
-            $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-                ->where('group_id', $id)
-                ->get();
+            $contacts = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                    ->where('group_id', $id)
+                    ->orderBy('name')
+                    ->paginate(15);
         }
 
-        $totalDataNumber = $data->count();
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
+                ->orderBy('name')
+                ->get();
+        });
 
 
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('contacts.contacts', [
+            'contacts' => $contacts,
+            'groups' => $groups
+        ]);
     }
     public function filterChar(Request $request){
-        $start_val = $request->val;
+        $start_val = $request->char;
 
         if($start_val === 0 || $start_val === '0'){
-            $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-                ->get();
+            $contacts = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                    ->orderBy('name')
+                    ->paginate(15);
         }
         else {
-            $data = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
-                ->where('first_name', 'ILIKE', $start_val.'%')
-                ->get();
+            $contacts = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+                    ->where('first_name', 'ILIKE', $start_val.'%')
+                    ->orderBy('name')
+                    ->paginate(15);
         }
 
-        $totalDataNumber = $data->count();
+        $groups = Cache::remember('groups', 30*60, function () {
+            return Groups::selectRaw('id, name')
+                ->orderBy('name')
+                ->get();
+        });
 
 
-        return response()->json([
-            'data' => $data,
-            'totalDataNumber' => $totalDataNumber
-        ], 200);
+        return view('contacts.contacts', [
+            'contacts' => $contacts,
+            'groups' => $groups
+        ]);
     }
 }

@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Cache;
 class Dashboard extends Controller
 {
     public function index(){
-        $totalGroupNumber = Cache::get('totalGroupNumber', function () {
+        $totalGroupNumber = Cache::remember('totalGroupNumber', 30*60, function(){
             return Groups::count();
         });
-        $totalContactNumber = Cache::get('totalContactNumber', function () {
+        $totalContactNumber = Cache::remember('totalContactNumber', 30*60, function(){
             return Contacts::count();
         });
 
