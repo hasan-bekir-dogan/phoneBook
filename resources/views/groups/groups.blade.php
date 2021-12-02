@@ -1,9 +1,9 @@
 @extends('layouts.general')
 
 @section('metaSeo')
-    <title>technoshop | laravel </title>
-    <meta name="description" content="technoshop |  laravel">
-    <meta name="keywords" content='technoshop | laravel'>
+    <title>Admin Panel | Groups</title>
+    <meta name="description" content="Admin Panel | Groups">
+    <meta name="keywords" content='Admin Panel | Groups'>
 @endsection
 
 

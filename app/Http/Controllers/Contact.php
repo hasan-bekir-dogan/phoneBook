@@ -253,6 +253,12 @@ class Contact extends Controller
         // caching area
         Cache::put('totalContactNumber', Contacts::count(), 30*60);
 
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('contacts/page1', $contactData, 10);
+
 
         return response()->json([
             'status' => 'successful'
@@ -287,6 +293,13 @@ class Contact extends Controller
 
         // caching area
         Cache::put('totalContactNumber', Contacts::count(), 30*60);
+
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('contacts/page1', $contactData, 10);
+
 
         return response()->json([
             'status' => 'successful'
@@ -399,6 +412,12 @@ class Contact extends Controller
 
         // caching area
         Cache::put('totalContactNumber', Contacts::count(), 30*60);
+
+        $contactData = Contacts::select('id', 'profile_photo_path', DB::raw("CONCAT(first_name,' ',last_name) AS name"))
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('contacts/page1', $contactData, 10);
 
 
         return response()->json([

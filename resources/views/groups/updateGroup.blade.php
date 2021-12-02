@@ -1,9 +1,9 @@
 @extends('layouts.general')
 
 @section('metaSeo')
-    <title>technoshop | laravel </title>
-    <meta name="description" content="technoshop |  laravel">
-    <meta name="keywords" content='technoshop | laravel'>
+    <title>Admin Panel | Update Group</title>
+    <meta name="description" content="Admin Panel | Update Group">
+    <meta name="keywords" content='Admin Panel | Update Group'>
 @endsection
 
 @section('content')
@@ -60,7 +60,7 @@
                                                                         <div class="buttonAreaHeadSection">
                                                                             <div class="buttonArea">
                                                                                 <button type="submit" class="generalButton updateButton">UPDATE</button>
-                                                                                <a href="{{route('group-list')}}" class="generalButton cancelButton">CANCEL</a>
+                                                                                <a href="{{route('groups.list')}}" class="generalButton cancelButton">CANCEL</a>
                                                                             </div>
                                                                             <div class="buttonArea">
                                                                                 <a id="deleteGroupButtonId" href="javascript:void(0)" class="generalButton cancelButton deleteButton">DELETE</a>

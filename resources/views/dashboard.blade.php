@@ -2,8 +2,8 @@
 
 @section('metaSeo')
     <title>Admin Panel | Dashboard</title>
-    <meta name="description" content="technoshop |  laravel">
-    <meta name="keywords" content='technoshop | laravel'>
+    <meta name="description" content="Admin Panel | Dashboard">
+    <meta name="keywords" content='Admin Panel | Dashboard'>
 @endsection
 
 

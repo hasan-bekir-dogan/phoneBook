@@ -63,6 +63,12 @@ class Group extends Controller
         // caching area
         Cache::put('totalGroupNumber', Groups::count(), 30*60);
 
+        $groupData = Groups::selectRaw('id, name')
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('groups/page1', $groupData, 10);
+
         return response()->json([
             'status' => 'successful'
         ],200);
@@ -78,6 +84,12 @@ class Group extends Controller
 
         // caching area
         Cache::put('totalGroupNumber', Groups::count(), 30*60);
+
+        $groupData = Groups::selectRaw('id, name')
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('groups/page1', $groupData, 10);
 
         return response()->json([
             'status' => 'successful'
@@ -100,6 +112,12 @@ class Group extends Controller
 
         // caching area
         Cache::put('totalGroupNumber', Groups::count(), 30*60);
+
+        $groupData = Groups::selectRaw('id, name')
+            ->orderBy('name')
+            ->paginate(15);
+
+        Cache::put('groups/page1', $groupData, 10);
 
         return response()->json([
             'status' => 'successful'

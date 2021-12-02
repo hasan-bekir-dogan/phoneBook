@@ -31,6 +31,28 @@ $('#groupEditForm').on('submit', function (e){
 
         toastr.success('The group information has been successfully updated!');
 
+        let timerInterval
+        Swal.fire({
+            title: 'You are redirected to the group list page.',
+            timer: 4000,
+            timerProgressBar: false,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            window.location.href='/groups';
+
+            if (result.dismiss === Swal.DismissReason.timer) {
+            }
+        })
+
     }).fail(function (response) {
 
         closeAjaxLoader();
@@ -93,7 +115,7 @@ function deleteGroup(groupId){
                         clearInterval(timerInterval)
                     }
                 }).then((result) => {
-                    window.location.href = '/group/list';
+                    window.location.href = '/groups';
 
                     if (result.dismiss === Swal.DismissReason.timer) {
                     }
