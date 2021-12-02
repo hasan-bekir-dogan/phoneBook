@@ -24,11 +24,7 @@ function deleteContact(id){
                 },
                 dataType:"json"
             }).done(function (response) {
-                contactList();
-
-                closeAjaxLoader();
-
-                toastr.success('The contact has been successfully deleted.');
+                window.location.href='/contacts';
             }).fail(function (response) {
 
                 toastr.error('Something went wrong.');

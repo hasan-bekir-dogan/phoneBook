@@ -80,7 +80,7 @@ $('#updateContactForm').on('submit', function (e) {
 
             toastr.success('The contact has been successfully created!');
 
-            /*let timerInterval
+            let timerInterval
             Swal.fire({
                 title: 'You are redirected to the contact list page.',
                 timer: 4000,
@@ -96,12 +96,11 @@ $('#updateContactForm').on('submit', function (e) {
                     clearInterval(timerInterval)
                 }
             }).then((result) => {
-                window.location.href = '/contact/list';
+                window.location.href = '/contacts';
 
                 if (result.dismiss === Swal.DismissReason.timer) {
                 }
-            })*/
-
+            })
 
         }).fail(function (response) {
 
@@ -252,7 +251,7 @@ function deleteContact(id){
                         clearInterval(timerInterval)
                     }
                 }).then((result) => {
-                    window.location.href = '/contact/list';
+                    window.location.href = '/contacts';
 
                     if (result.dismiss === Swal.DismissReason.timer) {
                     }

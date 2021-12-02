@@ -82,7 +82,7 @@ $('#addContactForm').on('submit', function (e) {
                     clearInterval(timerInterval)
                 }
             }).then((result) => {
-                window.location.href = '/contact/list';
+                window.location.href = '/contacts';
 
                 if (result.dismiss === Swal.DismissReason.timer) {
                 }

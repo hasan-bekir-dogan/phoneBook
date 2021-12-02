@@ -47,7 +47,7 @@ $('#addGroupForm').on('submit', function (e){
                 clearInterval(timerInterval)
             }
         }).then((result) => {
-            window.location.href='/group/list';
+            window.location.href='/groups';
 
             if (result.dismiss === Swal.DismissReason.timer) {
             }

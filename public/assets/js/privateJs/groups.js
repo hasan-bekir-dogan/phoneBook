@@ -24,11 +24,7 @@ function deleteGroup(groupId){
                 },
                 dataType:"json"
             }).done(function (response) {
-                groupList();
-
-                closeAjaxLoader();
-
-                toastr.success('The group has been successfully deleted.');
+                window.location.href='/groups';
             }).fail(function (response) {
 
                 toastr.error('Something went wrong.');
