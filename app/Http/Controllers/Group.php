@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Contacts;
 use App\Models\Groups;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class Group extends Controller
 {
     public function index(){
-        $data = Groups::selectRaw('id, name')
-                        ->get();
-
-        $totalDataNumber = $data->count();
+        $data = Cache::get('blogs', function () {
+            return Groups::selectRaw('id, name')
+                ->get();
+        });
+        $totalDataNumber = Cache::get('totalGroupNumber', function () {
+            return Groups::count();
+        });
 
         return response()->json([
             'data' => $data,
@@ -46,6 +50,11 @@ class Group extends Controller
                     'name' => $name
                 ]);
 
+        $groupData = Groups::selectRaw('id, name')->get();
+
+        Cache::put('groups', $groupData, 22*60);
+        Cache::put('totalGroupNumber', $groupData->count(), 22*60);
+
         return response()->json([
             'status' => 'successful'
         ],200);
@@ -58,6 +67,11 @@ class Group extends Controller
                 ->update([
                     'group_id' => 0
                 ]);
+
+        $groupData = Groups::selectRaw('id, name')->get();
+
+        Cache::put('groups', $groupData, 22*60);
+        Cache::put('totalGroupNumber', $groupData->count(), 22*60);
 
         return response()->json([
             'status' => 'successful'
@@ -74,9 +88,14 @@ class Group extends Controller
             ]
         );
 
-        $product = new Groups();
-        $product->name = $request->name;
-        $product->save();
+        $group = new Groups();
+        $group->name = $request->name;
+        $group->save();
+
+        $groupData = Groups::selectRaw('id, name')->get();
+
+        Cache::put('groups', $groupData, 22*60);
+        Cache::put('totalGroupNumber', $groupData->count(), 22*60);
 
         return response()->json([
             'status' => 'successful'
@@ -96,7 +115,6 @@ class Group extends Controller
                         ->get();
 
         $totalDataNumber = $data->count();
-
 
         return response()->json([
             'data' => $data,

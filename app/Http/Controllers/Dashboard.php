@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contacts;
+use App\Models\Groups;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class Dashboard extends Controller
 {
     public function index(){
-        $orderNumber = 1;
-        $productNumber = 1;
-        $contactNumber = 1;
-        $userNumber = 1;
+        $totalGroupNumber = Cache::get('totalGroupNumber', function () {
+            return Groups::count();
+        });
+        $totalContactNumber = Cache::get('totalContactNumber', function () {
+            return Contacts::count();
+        });
 
         return view('dashboard', [
-            'order_number' => $orderNumber,
-            'product_number' => $productNumber,
-            'contact_number' => $contactNumber,
-            'user_number' => $userNumber
+            'totalGroupNumber' => $totalGroupNumber,
+            'totalContactNumber' => $totalContactNumber
         ]);
     }
 }
