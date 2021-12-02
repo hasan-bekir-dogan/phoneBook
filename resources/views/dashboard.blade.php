@@ -36,10 +36,10 @@
                                                     <div class="card-block-small products">
                                                         <i class="icofont card1-icon"></i>
                                                         <span class="title">Groups</span>
-                                                        <h4>1</h4>
+                                                        <h4>{{$totalGroupNumber}}</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
-                                                                Number of groups that created
+                                                                Number of groups
                                                             </span>
                                                         </div>
                                                     </div>
@@ -52,7 +52,7 @@
                                                     <div class="card-block-small contacts">
                                                         <i class="icofont card1-icon"></i>
                                                         <span class="title">Contacts</span>
-                                                        <h4>1</h4>
+                                                        <h4>{{$totalContactNumber}}</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                                 Number of Contacts
