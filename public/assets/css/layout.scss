@@ -285,30 +285,31 @@ body {
             align-items: center;
             align-content: center;
             .chooseImagesSection{
-                width:100%;
                 position:relative;
+                width: 200px;
+                height: 200px;
                 .imageFileInput{
                     position: relative;
                     z-index: 4;
                     width: 100%;
-                    height: 100px;
+                    height: 100%;
                     margin: 0;
                     opacity: 0;
                     transition: all 0.2s;
                     cursor:pointer;
+                    @include radius(50%);
                 }
                 .imageFileLabel{
                     position: absolute;
                     top: 0;
-                    right: 0;
                     left: 0;
-                    z-index: 3;
-                    height: 100px;
-                    color: $color32;
-                    background-color: $color27;
-                    border: 2px solid $color27;
+                    z-index: 2;
+                    height: 100%;
                     width:100%;
-                    @include radius(5px);
+                    color: $color32;
+                    background-color: transparent;
+                    border: 2px solid transparent;
+                    @include radius(50%);
                     font-size: 50px;
                     display:flex;
                     flex-direction: column;
@@ -319,12 +320,63 @@ body {
                     transition: all 0.2s;
                     >i{
                         opacity:0.9;
+                        display:none;
                     }
+                }
+                img{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                    height: 100%;
+                    width:100%;
+                    @include radius(50%);
+                    object-fit: cover;
+                    object-position: center;
                 }
                 input:hover+label, input:active+label {
                     cursor: pointer $i;
-                    background-color: $whiteColor;
+                    background-color: rgba(255,255,255,0.05);
                     border:2px dashed $color19;
+                    i{
+                        display:block;
+                    }
+                }
+                .deleteImageButton{
+                    position: absolute;
+                    top: 9px;
+                    right: 18px;
+                    z-index: 10;
+                    @include radius(50%);
+                    width:32px;
+                    height:32px;
+                    background-color: $textColor;
+                    border:3px solid $whiteColor;
+                    font-size: 15px;
+                    color:$whiteColor;
+                    display:flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-content: center;
+                    align-items: center;
+                    i{
+                        width:15px;
+                        height:15px;
+                        display:flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+            .imageSectionButtons{
+                label{
+                    font-size: 16px;
+                    color:$color32;
+                    font-family: $fontSemiBold;
+                    margin-top:10px;
+                    cursor:pointer;
                 }
             }
         }
@@ -396,6 +448,31 @@ body {
         padding: 30px 15px 0 15px;
         color: $color4;
     }
+    .buttonAreaHeadSection{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        .buttonArea {
+            .deleteButton {
+                border-color: $danger $i;
+                color: $danger $i;
+                &:hover{
+                    border-color: $danger $i;
+                    color: $danger $i;
+                }
+                &:active{
+                    border-color: $danger $i;
+                    color: $danger $i;
+                }
+                &:focus{
+                    border-color: $danger $i;
+                    color: $danger $i;
+                }
+            }
+        }
+    }
     .buttonArea{
         display:flex;
         flex-direction: row;
@@ -438,6 +515,75 @@ body {
     .userDetailsButtonArea{
         padding: 20px 15px 0 15px;
     }
+    .addedFormGroups{
+        padding-bottom:0;
+        .deleteBtnArea{
+            padding: 8px 12px;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end;
+            align-content: flex-end;
+            margin-top:22px;
+            border:1px solid transparent;
+            a{
+                line-height: 1;
+                font-size: 17px;
+                color:$color21;
+                &:hover{
+                    color:$color21;
+                }
+                &:active{
+                    color:$color21;
+                }
+                &:focus{
+                    color:$color21;
+                }
+            }
+        }
+    }
+}
+.panelFormArea{
+    .form-group {
+        margin-bottom:0;
+        .row{
+            width:100%;
+            margin:0;
+        }
+        input, textarea {
+            margin-bottom: 0 $i;
+            border-color: $formInputColor;
+        }
+        textarea{
+            height:100px;
+        }
+        .form-control{
+            @include radius(5px);
+            color:$color30;
+        }
+        label{
+            color:$blackColor;
+            span{
+                color: $color21;
+            }
+        }
+        .form-control:focus{
+            border: 1px solid $blackColor;
+            color: $blackColor;
+        }
+        .form-control:disabled{
+            background-color: $color19;
+            color:$blackColor;
+            opacity: 0.7;
+            cursor: initial;
+        }
+        .nullInformationArea:disabled{
+            color: $color21;
+        }
+        .errorMessageArea{
+            line-height:1.8;
+        }
+    }
 }
 
 .generalButton{
@@ -452,6 +598,56 @@ body {
   &:hover{
     background-color: $logoColorHover;
   }
+}
+.addModalButton{
+    background-color: $color39;
+    border:1px solid $color39;
+    border-radius: 50px;
+    box-shadow: 0 0 20px rgba(56, 191, 142, 0.20);
+    padding:8px 20px;
+    font-size: 14px;
+    display:block;
+    width:150px;
+    &:hover{
+        background-color: $color39;
+        color:$whiteColor;
+    }
+    &:active{
+        background-color: $color39;
+        color:$whiteColor;
+    }
+    &:focus{
+        background-color: $color39;
+        color:$whiteColor;
+    }
+}
+.flexCenter{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.saveButton{
+    background-color: $logoColor;
+    color:$whiteColor;
+    text-align: center;
+    padding:6px 12px;
+    border:1px solid $logoColor;
+    outline:none;
+    border-radius: 3px;
+    cursor:pointer;
+    text-transform: uppercase;
+    line-height: 1;
+    &:hover{
+        background-color: $logoColorHover;
+    }
+    &:disabled{
+        &:hover{
+            background-color: #868e96;
+            border-color: #868e96;
+        }
+    }
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -593,67 +789,39 @@ input[type=number] {
             }
         }
     }
-    .paginationArea{
-        margin-top:20px;
-        display: flex;
+    .filterAlphabetArea{
+        display:flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: flex-start;
         align-content: center;
-        .recordNumber{
-            width:fit-content;
-            color:$blackColor;
+        align-items: center;
+        margin-bottom:20px;
+        li{
+            background-color: $color25;
+            @include radius(50%);
+            width:27px;
+            height:27px;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
             font-size: 14px;
-        }
-        .paginationSection{
-            >ul{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                align-content: center;
-                li{
-                    >button{
-                        width:100%;
-                        height:100%;
-                        padding:8px 12px;
-                        background-color: $whiteColor;
-                        border:1px solid $color24;
-                        border-right:none;
-                        color: $blackColor;
-                        outline:none $i;
-                        cursor:pointer;
-                        &:hover{
-                            background-color: $color20;
-                            color: $color25;
-                        }
-                        &.disabled{
-                            color:$color12;
-                            pointer-events: none;
-                            cursor:default;
-                        }
-                        &.active{
-                            background-color: $color25;
-                            color: $color20;
-                        }
-                    }
-                    &:first-child{
-                        >button {
-                            border-top-left-radius: 3px;
-                            border-bottom-left-radius: 3px;
-                        }
-                    }
-                    &:last-child{
-                        >button {
-                            border-right: 1px solid $color24;
-                            border-top-right-radius: 3px;
-                            border-bottom-right-radius: 3px;
-                        }
-                    }
-                }
+            color:$whiteColor;
+            flex-wrap: wrap;
+            margin-left:5px;
+            &:first-child{
+                margin-left:0;
             }
         }
     }
+}
+.contactsPhoto{
+    width:55px;
+    height:55px;
+    @include radius(50%);
+    object-fit: cover;
+    object-position: center;
 }
 .header-navbar .navbar-wrapper .navbar-logo .mobile-menu {
     position: absolute;
