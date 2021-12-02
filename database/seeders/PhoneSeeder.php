@@ -20,9 +20,9 @@ class PhoneSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         // And now, let's create a few phone in our database:
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 130000; $i++) {
             Phones::create([
-                'contact_id' => $faker->numberBetween($min = 1, $max = 10),
+                'contact_id' => $faker->numberBetween($min = 1, $max = 100000),
                 'label_name_id' => $faker->numberBetween($min = 1, $max = 6),
                 'phone' => $faker->phoneNumber
             ]);

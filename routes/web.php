@@ -34,20 +34,19 @@ Route::middleware(['authAdmin'])->group( function () {
 
 
     // CRUD for groups
-    Route::get('groups', [Group::class, "index"]); // show groups
+    Route::get('groups', [Group::class, "index"])->name('groups.list'); // view('group list', groups)
     Route::get('groups/{group}', [Group::class, "show"]); // view('update-group', group)
     Route::post('groups', [Group::class, "store"]); // create group
     Route::patch('groups/{group}', [Group::class, "update"]); // update group
     Route::delete('groups/{group}', [Group::class, "delete"]); // delete group
     // view pages for groups
-    Route::get('group/list', [Group::class, "groupListPage"])->name('group-list'); // view('group list')
     Route::get('group/create', [Group::class, "addGroupPage"])->name('group-create'); // view('add-group')
     // search for groups
-    Route::post('group/search', [Group::class, "search"]); // search group
+    Route::get('group/search', [Group::class, "search"])->name('group.search'); // search group
 
 
     // CRUD for contacts
-    Route::get('contacts', [Contact::class, "index"]); // show contacts
+    Route::get('contacts', [Contact::class, "index"])->name('contacts.list'); // view('contact list', contacts)
     Route::get('contacts/{contact}', [Contact::class, "show"]); // view('update-contact', contact)
     Route::post('contacts', [Contact::class, "store"]); // create contact
     Route::post('contacts/{contact}', [Contact::class, "update"]); // update contact
@@ -55,12 +54,11 @@ Route::middleware(['authAdmin'])->group( function () {
     // get phones, emails and addresses information to show on update contact page
     Route::get('contact/show/other-information/{contact}', [Contact::class, "showOtherInformation"]); // show contact who have phones, emails and addresses
     // view pages for contacts
-    Route::get('contact/list', [Contact::class, "contactListPage"])->name('contact-list'); // view('contact list')
     Route::get('contact/create', [Contact::class, "addContactPage"])->name('contact-create'); // view('add-contact')
     // search for contacts
-    Route::post('contact/search', [Contact::class, "search"]); // search contact
-    Route::post('contact/filter/group', [Contact::class, "filterGroup"]); // filter group
-    Route::post('contact/filter/char', [Contact::class, "filterChar"]); // filter char
+    Route::get('contact/search', [Contact::class, "search"])->name('contact.search'); // search contact
+    Route::get('contact/filter/group', [Contact::class, "filterGroup"])->name('contact.filter.group'); // filter group
+    Route::get('contact/filter/char', [Contact::class, "filterChar"])->name('contact.filter.char'); // filter char
 
 });
 

@@ -20,9 +20,9 @@ class EmailSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         // And now, let's create a few emails in our database:
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 120000; $i++) {
             Emails::create([
-                'contact_id' => $faker->numberBetween($min = 1, $max = 10),
+                'contact_id' => $faker->numberBetween($min = 1, $max = 100000),
                 'label_name_id' => $faker->randomElement($array = array (2,3,4,6)),
                 'email' => $faker->email
             ]);

@@ -1942,3 +1942,113 @@ table.dataTable {
 .pcoded .pcoded-header .navbar-logo[logo-theme="theme1"] {
     background-color: #46535d;
 }
+
+
+
+/*admin panel pagination links start*/
+.paginationLinksArea {
+    margin-top:20px;
+    >nav >div{
+        &:first-child{
+            display:none;
+        }
+        &:last-child{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            align-content: center;
+            >div {
+                &:last-child {
+                    > span {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-content: center;
+                        align-items: center;
+                        .relative.inline-flex{
+                            border-color: $color24 $i;
+                            border-right:none $i;
+                            padding-left: 12px $i;
+                            padding-right: 12px $i;
+                            display:flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            align-content: center;
+                            &:last-child{
+                                border-right:1px solid $color24 $i;
+                            }
+                        }
+                        >span{
+                            border-color: $color24 $i;
+                            .relative.inline-flex{
+                                color: $blackColor;
+                                &:last-child{
+                                    border-right:none $i;
+                                }
+                            }
+                            &:first-child {
+                                .relative.inline-flex{
+                                    padding-top: 4px $i;
+                                    padding-bottom: 4px $i;
+                                    border-bottom-left-radius: 3px;
+                                    border-top-left-radius: 3px;
+                                }
+                                svg {
+                                    width: 22px;
+                                    height: 22px;
+                                }
+                            }
+                            &:last-child {
+                                .relative.inline-flex{
+                                    padding-top: 4px $i;
+                                    padding-bottom: 4px $i;
+                                    border-bottom-right-radius: 3px;
+                                    border-top-right-radius: 3px;
+                                    &:last-child{
+                                        border-right:1px solid $color24 $i;
+                                    }
+                                }
+                                svg {
+                                    width: 22px;
+                                    height: 22px;
+                                }
+                            }
+                        }
+                        >a{
+                            color:$color26;
+                            border-color: $color24 $i;
+                            text-decoration: none;
+                            &:hover{
+                                background-color: $color13;
+                                color: $color25;
+                            }
+                            &:first-child{
+                                padding-top: 4px $i;
+                                padding-bottom: 4px $i;
+                                border-bottom-left-radius: 3px;
+                                border-top-left-radius: 3px;
+                                svg {
+                                    width: 22px;
+                                    height: 22px;
+                                }
+                            }
+                            &:last-child {
+                                padding-top: 4px $i;
+                                padding-bottom: 4px $i;
+                                border-bottom-right-radius: 3px;
+                                border-top-right-radius: 3px;
+                                svg {
+                                    width: 22px;
+                                    height: 22px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*admin panel pagination links end*/

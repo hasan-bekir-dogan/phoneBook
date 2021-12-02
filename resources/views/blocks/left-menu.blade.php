@@ -46,7 +46,7 @@
                 <ul class="pcoded-submenu">
 
                     <li>
-                        <a href="{{route('group-list')}}">
+                        <a href="{{route('groups.list')}}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">List Groups</span>
                             <span class="pcoded-mcaret"></span>
@@ -76,7 +76,7 @@
                 <ul class="pcoded-submenu">
 
                     <li>
-                        <a href="{{route('contact-list')}}">
+                        <a href="{{route('contacts.list')}}">
                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                             <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">List Contacts</span>
                             <span class="pcoded-mcaret"></span>
