@@ -1,9 +1,7 @@
 
-**Project Code:** ADY-11
-
-**Project Name:** Phone Book
-
-**Project Description:** Phone book that have 100.000 records.
+##### Project Code: ADY-11
+##### Project Name: Phone Book
+##### Project Description: Phone book that have 100.000 records.
 
 ##
 
@@ -16,9 +14,26 @@
 - adding a group for contacts.
 - adding a profile photo for contact.
 - adding name, company, notes for contact.
-- adding one or more phones, emails and addresses.
+- adding one or more phones, emails and addresses for contact.
 
 ##
 
-_**You will seed the database using the seeder classes after run migrations.**_
+***_**You will seed the database using the seeder classes after run migrations.**_
 
+##
+
+**Techonologies that used in the project.**
+
+- Object Oriented Programming
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
+- jQuery
+- Ajax
+- PHP
+- Laravel Framework
+- JSON
+- SQL
+- PostgreSQL
+- Cache (Cache driver: database)
