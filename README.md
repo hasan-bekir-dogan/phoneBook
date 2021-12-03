@@ -24,6 +24,13 @@
 
 ##
 
+**You will login using user information that is below shown after you seed the database using the seeder classes.**
+
+- E-mail: admin@contact.com
+- Password: admin.123
+
+##
+
 **Techonologies that used in the project.**
 
 - Object Oriented Programming
