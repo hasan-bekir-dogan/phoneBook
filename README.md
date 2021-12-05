@@ -20,14 +20,14 @@
 
 ##
 
-***_**You will seed the database using the seeder classes after run migrations.**_
+    You will seed the database using the seeder classes after run migrations.
 
 ##
 
 **You will login using user information that is below shown after you seed the database using the seeder classes.**
 
-- E-mail: admin@contact.com
-- Password: admin.123
+    E-mail: admin@contact.com
+    Password: admin.123
 
 ##
 
